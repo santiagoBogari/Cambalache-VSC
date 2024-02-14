@@ -42,4 +42,16 @@ INNER JOIN salesman b
 ON a.salesman_id = b.salesman_id 
 WHERE b.commission > 0.12 AND a.city <> b.city
 
--- ej.5
+-- ej.6
+
+SELECT a.ord_no, a.ord_date, a.purch_amt, 
+       b.cust_name AS "Customer Name", b.grade, 
+       c.name AS "Salesman", c.commission
+FROM orders a
+INNER JOIN customer b 
+ON a.salesman_id = b.salesman_id 
+INNER JOIN salesman c
+ON a.salesman_id = c.salesman_id 
+
+-- ej.7
+
