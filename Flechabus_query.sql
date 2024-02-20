@@ -252,4 +252,422 @@ BO.Empresa_Venta__c = 'La Veloz'
 
 -- (1016430 rows)
 
+/* Next Query : SFImport_Account (with emails != null)
+Unsubscribed 
+Bounced_Emails_Name_Id  
+*/
+SELECT
+    AC.id,
+    AC.PersonContactId,
+    AC.Name AS Nombre,
+    AC.FirstName,
+    AC.LastName,
+    AC.Type AS Tipo,
+    AC.RecordTypeId,
+    AC.Phone AS Telefono,
+    AC.OwnerID,
+    AC.CreatedDate AS Fecha_Creacion,
+    AC.AccountSource AS Origen_Cuenta,
+    AC.Tipo_de_Documento__PC,
+    AC.Nro_Documento__pc,
+    AC.ID_Pasajero__PC,
+    AC.Id_del_pasajero__c,
+    AC.Fecha_de_Nacimiento__c,
+    AC.PersonBirthDate,
+    AC.Email__c,
+    AC.PersonEmail,
+    AC.Phone,
+    AC.IsPersonAccount
+FROM
+    SFImport_Account AS AC
+WHERE
+    (AC.PersonEmail IS NOT NULL OR AC.Email__c IS NOT NULL)
+    AND NOT EXISTS (
+        SELECT 1
+        FROM Unsubscribed AS U
+        WHERE AC.Email__c = U.EmailAddress OR AC.PersonEmail = U.EmailAddress
+    )
+    AND NOT EXISTS (
+        SELECT 1
+        FROM Bounced_Emails_Name_Id AS BE
+        WHERE AC.Email__c = BE.EmailAddress OR AC.PersonEmail = BE.EmailAddress
+    )
+
+   /*  (1199068 rows) */
+
+   /*  */
+   SELECT
+    AC.id,
+    AC.PersonContactId,
+    AC.Name AS Nombre,
+    AC.FirstName,
+    AC.LastName,
+    AC.Type AS Tipo,
+    AC.RecordTypeId,
+    AC.Phone AS Telefono,
+    AC.OwnerID,
+    AC.CreatedDate AS Fecha_Creacion,
+    AC.AccountSource AS Origen_Cuenta,
+    AC.Tipo_de_Documento__PC,
+    AC.Nro_Documento__pc,
+    AC.ID_Pasajero__PC,
+    AC.Id_del_pasajero__c,
+    AC.Fecha_de_Nacimiento__c,
+    AC.PersonBirthDate,
+    AC.Email__c,
+    AC.PersonEmail,
+    AC.Phone,
+    AC.IsPersonAccount
+FROM
+    SFImport_Account AS AC
+WHERE
+    (AC.PersonEmail IS NOT NULL OR AC.Email__c IS NOT NULL)
+    AND NOT EXISTS (
+        SELECT 1
+        FROM _ListSubscribers AS LS
+        WHERE (LS.Status = 'held' OR LS.Status = 'bounced' OR LS.Status = 'unsubscribed')
+          AND (AC.PersonEmail = LS.EmailAddress OR AC.Email__c = LS.EmailAddress)
+    )
+
+   /*   (1276901 rows) */
+
+
+
+
+-- Todos los de SFImport-account que tengan las 4 empresas en SFImport-boletos
+SELECT
+AC.id,
+AC.PersonContactId,
+AC.Name AS Nombre,
+AC.FirstName,
+AC.LastName,
+AC.Type AS Tipo,
+AC.RecordTypeId,
+AC.Phone AS Telefono,
+AC.OwnerID,
+AC.CreatedDate AS Fecha_Creacion,
+AC.AccountSource AS Origen_Cuenta,
+AC.Tipo_de_Documento__PC,
+AC.Nro_Documento__pc,
+AC.ID_Pasajero__PC,
+AC.Id_del_pasajero__c,
+AC.Fecha_de_Nacimiento__c,
+AC.PersonBirthDate,
+AC.Email__c,
+AC.PersonEmail,
+AC.Phone,
+AC.IsPersonAccount,
+BO.Empresa_Venta__c
+FROM SFImport_Account AS AC
+INNER JOIN SFImport_Boletos AS BO 
+    ON BO.Id_Pasajero_Salesforce__c = AC.Id
+WHERE AC.PersonEmail IS NOT NULL 
+AND BO.Empresa_Venta__c IN ('Chevallier','Flechabus','Urquiza','La Veloz')
+
+-- Todos los de SFImport-account que tengan las 4 empresas en SFImport-boletos
+
+SELECT
+AC.id,
+AC.PersonContactId,
+AC.Name AS Nombre,
+AC.FirstName,
+AC.LastName,
+AC.Type AS Tipo,
+AC.RecordTypeId,
+AC.Phone AS Telefono,
+AC.OwnerID,
+AC.CreatedDate AS Fecha_Creacion,
+AC.AccountSource AS Origen_Cuenta,
+AC.Tipo_de_Documento__PC,
+AC.Nro_Documento__pc,
+AC.ID_Pasajero__PC,
+AC.Id_del_pasajero__c,
+AC.Fecha_de_Nacimiento__c,
+AC.PersonBirthDate,
+AC.Email__c,
+AC.PersonEmail,
+AC.Phone,
+AC.IsPersonAccount,
+BO.Empresa_Venta__c
+FROM SFImport_Account AS AC
+LEFT JOIN SFImport_Boletos AS BO 
+    ON BO.Id_Pasajero_Salesforce__c = AC.Id
+WHERE AC.PersonEmail IS NOT NULL 
+AND BO.Empresa_Venta__c IN ('Chevallier','Flechabus','Urquiza','La Veloz')
+
+--  (145307 rows)
+
 /*  */
+SELECT
+AC.id,
+AC.PersonContactId,
+AC.Name AS Nombre,
+AC.FirstName,
+AC.LastName,
+AC.Type AS Tipo,
+AC.RecordTypeId,
+AC.Phone AS Telefono,
+AC.OwnerID,
+AC.CreatedDate AS Fecha_Creacion,
+AC.AccountSource AS Origen_Cuenta,
+AC.Tipo_de_Documento__PC,
+AC.Nro_Documento__pc,
+AC.ID_Pasajero__PC,
+AC.Id_del_pasajero__c,
+AC.Fecha_de_Nacimiento__c,
+AC.PersonBirthDate,
+AC.Email__c,
+AC.PersonEmail,
+AC.Phone,
+AC.IsPersonAccount,
+BO.Empresa_Venta__c
+FROM SFImport_Account AS AC
+INNER JOIN SFImport_Boletos AS BO 
+    ON BO.Id_Pasajero_Salesforce__c = AC.Id
+WHERE AC.PersonEmail IS NOT NULL 
+AND BO.Empresa_Venta__c IN ('Chevallier','Flechabus','Urquiza','La Veloz')
+--  (145307 rows)
+
+/* -- Todos los de 'Results_tofilter' que tengan las 4 empresas en SFImport-boletos */
+select
+AC.id,
+AC.PersonContactId,
+AC.Nombre,
+AC.FirstName,
+AC.LastName,
+AC.Tipo,
+AC.RecordTypeId,
+AC.Telefono,
+AC.OwnerID,
+AC.Fecha_Creacion,
+AC.Origen_Cuenta,
+AC.Tipo_de_Documento__PC,
+AC.Nro_Documento__pc,
+AC.ID_Pasajero__PC,
+AC.Id_del_pasajero__c,
+AC.Fecha_de_Nacimiento__c,
+AC.PersonBirthDate,
+AC.Email__c,
+AC.PersonEmail,
+AC.Phone,
+AC.IsPersonAccount,
+BO.Empresa_Venta__c
+from Results_tofilter as AC
+left join SFImport_Boletos as BO on BO.Id_Pasajero_Salesforce__c = AC.Id
+where 
+BO.Empresa_Venta__c = 'Chevallier' or 
+BO.Empresa_Venta__c = 'Flechabus' or
+BO.Empresa_Venta__c = 'Urquiza' or
+BO.Empresa_Venta__c = 'La Veloz'
+
+--  (114758 rows)
+
+/*  */
+
+SELECT
+AC.id,
+AC.PersonContactId,
+AC.Nombre,
+AC.FirstName,
+AC.LastName,
+AC.Tipo,
+AC.RecordTypeId,
+AC.Telefono,
+AC.OwnerID,
+AC.Fecha_Creacion,
+AC.Origen_Cuenta,
+AC.Tipo_de_Documento__PC,
+AC.Nro_Documento__pc,
+AC.ID_Pasajero__PC,
+AC.Id_del_pasajero__c,
+AC.Fecha_de_Nacimiento__c,
+AC.PersonBirthDate,
+AC.Email__c,
+AC.PersonEmail,
+AC.Phone,
+AC.IsPersonAccount
+FROM Results_4_empresas AS AC
+WHERE
+    (AC.PersonEmail IS NOT NULL OR AC.Email__c IS NOT NULL)
+    AND NOT EXISTS (
+        SELECT 1
+        FROM Unsubscribed AS U
+        WHERE AC.Email__c = U.EmailAddress OR AC.PersonEmail = U.EmailAddress
+    )
+    AND NOT EXISTS (
+        SELECT 1
+        FROM Bounced_Emails_Name_Id AS BE
+        WHERE AC.Email__c = BE.EmailAddress OR AC.PersonEmail = BE.EmailAddress
+    )
+
+/* GER Query */
+
+SELECT DISTINCT a.id,
+       a.PersonContactId,
+       a.Name AS Nombre,
+       a.FirstName,
+       a.LastName,
+       a.Type AS Tipo,
+       a.RecordTypeId,
+       a.Phone AS Telefono,
+       a.OwnerID,
+       a.CreatedDate AS Fecha_Creacion,
+       a.AccountSource AS Origen_Cuenta,
+       a.Tipo_de_Documento__PC AS tipo_documento,
+       a.Nro_Documento__pc,
+       a.ID_Pasajero__PC,
+       a.Id_del_pasajero__c,
+       a.Fecha_de_Nacimiento__c,
+       a.PersonBirthDate,
+       a.Email__c,
+       a.PersonEmail,
+       a.Phone
+FROM SFImport_Account AS a
+LEFT JOIN (
+  SELECT DISTINCT *
+  FROM SFImport_Boletos
+  WHERE Empresa_Venta__c IN ('Chevallier','Flechabus','Urquiza','La Veloz')
+) AS b
+  ON b.Id_Pasajero_Salesforce__c = a.Id
+WHERE a.PersonEmail IS NOT NULL
+AND a.IsPersonAccount = '1'
+
+-- (1475106 rows)
+
+
+/*  */
+SELECT
+AC.id,
+AC.PersonContactId,
+AC.Nombre,
+AC.FirstName,
+AC.LastName,
+AC.Tipo,
+AC.RecordTypeId,
+AC.Telefono,
+AC.OwnerID,
+AC.Fecha_Creacion,
+AC.Origen_Cuenta,
+AC.Nro_Documento__pc,
+AC.ID_Pasajero__PC,
+AC.Id_del_pasajero__c,
+AC.Fecha_de_Nacimiento__c,
+AC.PersonBirthDate,
+AC.Email__c,
+AC.PersonEmail,
+AC.Phone
+FROM Results_4empresas AS AC
+WHERE
+    (AC.PersonEmail IS NOT NULL OR AC.Email__c IS NOT NULL)
+    AND NOT EXISTS (
+        SELECT 1
+        FROM _ListSubscribers AS LS
+        WHERE (LS.Status = 'held' OR LS.Status = 'bounced' OR LS.Status = 'unsubscribed')
+          AND (AC.PersonEmail = LS.EmailAddress OR AC.Email__c = LS.EmailAddress)
+    )
+
+    -- (1368273 rows)
+
+    /*  */
+    SELECT
+AC.id,
+AC.PersonContactId,
+AC.Nombre,
+AC.FirstName,
+AC.LastName,
+AC.Tipo,
+AC.RecordTypeId,
+AC.Telefono,
+AC.OwnerID,
+AC.Fecha_Creacion,
+AC.Origen_Cuenta,
+AC.Nro_Documento__pc,
+AC.ID_Pasajero__PC,
+AC.Id_del_pasajero__c,
+AC.Fecha_de_Nacimiento__c,
+AC.PersonBirthDate,
+AC.Email__c,
+AC.PersonEmail,
+AC.Phone
+FROM Results_4empresas AS AC
+WHERE
+    (AC.PersonEmail IS NOT NULL OR AC.Email__c IS NOT NULL)
+    AND NOT EXISTS (
+        SELECT 1
+        FROM Unsubscribed AS U
+        WHERE AC.Email__c = U.EmailAddress OR AC.PersonEmail = U.EmailAddress
+    )
+    AND NOT EXISTS (
+        SELECT 1
+        FROM Bounced_Emails_Name_Id AS BE
+        WHERE AC.Email__c = BE.EmailAddress OR AC.PersonEmail = BE.EmailAddress
+    )
+
+    -- (1215582 rows)
+
+    SELECT DISTINCT
+AC.id,
+AC.PersonContactId,
+AC.Name as Nombre,
+AC.FirstName,
+AC.LastName,
+AC.Type as Tipo,
+AC.RecordTypeId,
+AC.Phone as Telefono,
+AC.OwnerID,
+AC.CreatedDate as Fecha_Creacion,
+AC.AccountSource as Origen_Cuenta,
+AC.Tipo_de_Documento__PC,
+AC.Nro_Documento__pc,
+AC.ID_Pasajero__PC,
+AC.Id_del_pasajero__c,
+AC.Fecha_de_Nacimiento__c,
+AC.PersonBirthDate,
+AC.Email__c,
+AC.PersonEmail,
+AC.Phone,
+AC.IsPersonAccount,
+BO.Empresa_Venta__c
+from SFImport_Account as AC
+left join SFImport_Boletos as BO on BO.Id_Pasajero_Salesforce__c = AC.Id
+where
+AC.PersonEmail is not null and BO.Empresa_Venta__c is not null and
+BO.Empresa_Venta__c = 'Chevallier' or
+BO.Empresa_Venta__c = 'Flechabus' or
+BO.Empresa_Venta__c = 'Urquiza' or
+BO.Empresa_Venta__c = 'La Veloz'
+
+-- (461435 rows)  Results_distinct_4emp
+
+SELECT
+AC.id,
+AC.PersonContactId,
+AC.Nombre,
+AC.FirstName,
+AC.LastName,
+AC.Tipo,
+AC.RecordTypeId,
+AC.Telefono,
+AC.OwnerID,
+AC.Fecha_Creacion,
+AC.Origen_Cuenta,
+AC.Nro_Documento__pc,
+AC.ID_Pasajero__PC,
+AC.Id_del_pasajero__c,
+AC.Fecha_de_Nacimiento__c,
+AC.PersonBirthDate,
+AC.Email__c,
+AC.PersonEmail,
+AC.Phone,
+AC.Empresa_Venta__c
+FROM Results_distinct_4emp AS AC
+WHERE
+    (AC.PersonEmail IS NOT NULL OR AC.Email__c IS NOT NULL)
+    AND NOT EXISTS (
+        SELECT 1
+        FROM _ListSubscribers AS LS
+        WHERE (LS.Status = 'held' OR LS.Status = 'bounced' OR LS.Status = 'unsubscribed')
+          AND (AC.PersonEmail = LS.EmailAddress OR AC.Email__c = LS.EmailAddress)
+    )
+
+    -- (455439 rows)  Results_acc_4emp_unBo
