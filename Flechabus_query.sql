@@ -250,7 +250,7 @@ BO.Empresa_Venta__c = 'Flechabus' or
 BO.Empresa_Venta__c = 'Urquiza' or
 BO.Empresa_Venta__c = 'La Veloz'
 
--- (1016430 rows)
+-- (1016430 rows) DE Results4empresas
 
 /* Next Query : SFImport_Account (with emails != null)
 Unsubscribed 
@@ -397,7 +397,7 @@ AND BO.Empresa_Venta__c IN ('Chevallier','Flechabus','Urquiza','La Veloz')
 
 --  (145307 rows)
 
-/*  */
+/* Query Luca  */
 SELECT
 AC.id,
 AC.PersonContactId,
