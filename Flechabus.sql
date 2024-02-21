@@ -29,7 +29,7 @@ INNER JOIN SFImport_Boletos AS BO
 WHERE AC.PersonEmail IS NOT NULL 
 AND BO.Empresa_Venta__c IN ('Chevallier','Flechabus','Urquiza','La Veloz')
 
---(145325 rows)
+--Results--(145325 rows)
 
 SELECT DISTINCT
 AC.id,
@@ -60,7 +60,7 @@ INNER JOIN SFImport_Boletos AS BO
 WHERE AC.PersonEmail IS NOT NULL 
 AND BO.Empresa_Venta__c IN ('Chevallier','Flechabus','Urquiza','La Veloz')
 
---(71392 rows)
+--Results--(71392 rows)
 
 SELECT DISTINCT
 AC.id,
@@ -94,7 +94,7 @@ BO.Empresa_Venta__c = 'Flechabus' or
 BO.Empresa_Venta__c = 'Urquiza' or
 BO.Empresa_Venta__c = 'La Veloz')
 
---(71392 rows)
+--Results--(71392 rows)
 
 SELECT
 AC.id,
@@ -132,7 +132,7 @@ WHERE
         WHERE AC.Email__c = BE.EmailAddress OR AC.PersonEmail = BE.EmailAddress
     )
 
---(57514 rows)
+--Results--(57514 rows)
 
 SELECT
 AC.id,
@@ -164,5 +164,5 @@ WHERE
           AND (AC.PersonEmail = LS.EmailAddress OR AC.Email__c = LS.EmailAddress)
     )
 
---(65395 rows)
+--Results--(65395 rows)
 

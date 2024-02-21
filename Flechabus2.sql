@@ -37,7 +37,7 @@ WHERE
         WHERE AC.Email__c = BE.EmailAddress OR AC.PersonEmail = BE.EmailAddress
     )
 
-    -- (1215901 rows)  DE  Acc_sinBounce_sinUns
+    --Results-- (1215901 rows)  DE  Acc_sinBounce_sinUns
 
      SELECT
     AC.id,
@@ -72,7 +72,7 @@ WHERE
           AND (AC.PersonEmail = LS.EmailAddress OR AC.Email__c = LS.EmailAddress)
     )
 
-    -- (1368598 rows)
+--Results-- (1368598 rows)
 
 SELECT
 AC.id,
@@ -103,7 +103,7 @@ INNER JOIN SFImport_Boletos AS BO
 WHERE AC.PersonEmail IS NOT NULL 
 AND BO.Empresa_Venta__c IN ('Chevallier','Flechabus','Urquiza','La Veloz')
 
--- (118222 rows)  (tiene duplicados)
+--Results-- (118222 rows)  (tiene duplicados)
 
 SELECT DISTINCT
 AC.id,
@@ -134,4 +134,4 @@ INNER JOIN SFImport_Boletos AS BO
 WHERE AC.PersonEmail IS NOT NULL 
 AND BO.Empresa_Venta__c IN ('Chevallier','Flechabus','Urquiza','La Veloz')
 
--- (57522 rows)
+--Results-- (57522 rows)

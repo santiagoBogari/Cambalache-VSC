@@ -671,3 +671,74 @@ WHERE
     )
 
     -- (455439 rows)  Results_acc_4emp_unBo
+
+    ---------------------------------------------------------------------------------------------21-2
+    
+SELECT DISTINCT
+AC.id,
+AC.PersonContactId,
+AC.Name AS Nombre,
+AC.FirstName,
+AC.LastName,
+AC.Type AS Tipo,
+AC.RecordTypeId,
+AC.Phone AS Telefono,
+AC.OwnerID,
+AC.CreatedDate AS Fecha_Creacion,
+AC.AccountSource AS Origen_Cuenta,
+AC.Tipo_de_Documento__PC,
+AC.Nro_Documento__pc,
+AC.ID_Pasajero__PC,
+AC.Id_del_pasajero__c,
+AC.Fecha_de_Nacimiento__c,
+AC.PersonBirthDate,
+AC.Email__c,
+AC.PersonEmail,
+AC.Phone,
+AC.IsPersonAccount,
+BO.Empresa_Venta__c,
+Concat(AC.Tipo_de_documento__PC,AC.Nro_Documento__PC) AS dnicuenta,
+Concat(BO.Tipo_Documento__c,BO.Nro_Documento__c) AS dniboleto
+FROM SFImport_Account AS AC
+INNER JOIN SFImport_Boletos AS BO 
+    ON Concat(BO.Tipo_Documento__c,BO.Nro_Documento__c) = Concat(AC.Tipo_de_documento__PC,AC.Nro_Documento__PC)
+WHERE  
+ BO.Empresa_Venta__c IN ('Chevallier','Flechabus','Urquiza','La Veloz')
+
+ -- DE Acc_boletos4emp_xdni (534317 rows)
+
+
+
+    SELECT DISTINCT
+AC.id,
+AC.PersonContactId,
+AC.Name AS Nombre,
+AC.FirstName,
+AC.LastName,
+AC.Type AS Tipo,
+AC.RecordTypeId,
+AC.Phone AS Telefono,
+AC.OwnerID,
+AC.CreatedDate AS Fecha_Creacion,
+AC.AccountSource AS Origen_Cuenta,
+AC.Tipo_de_Documento__PC,
+AC.Nro_Documento__pc,
+AC.ID_Pasajero__PC,
+AC.Id_del_pasajero__c,
+AC.Fecha_de_Nacimiento__c,
+AC.PersonBirthDate,
+AC.Email__c,
+AC.PersonEmail,
+AC.Phone,
+AC.IsPersonAccount,
+BO.Empresa_Venta__c,
+Concat(AC.Tipo_de_documento__PC,AC.Nro_Documento__PC) AS dnicuenta,
+Concat(BO.Tipo_Documento__c,BO.Nro_Documento__c) AS dniboleto
+FROM SFImport_Account AS AC
+INNER JOIN SFImport_Boletos AS BO 
+    ON Concat(BO.Tipo_Documento__c,BO.Nro_Documento__c) = Concat(AC.Tipo_de_documento__PC,AC.Nro_Documento__PC)
+WHERE  AC.PersonEmail IS NOT NULL AND
+ BO.Empresa_Venta__c IN ('Chevallier','Flechabus','Urquiza','La Veloz')
+
+ -- (71514 rows) (la query anterior con   AC.PersonEmail IS NOT NULL)
+
