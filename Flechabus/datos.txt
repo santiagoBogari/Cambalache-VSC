@@ -1,0 +1,9 @@
+
+SFImport_Account :	13.718.954
+
+Accounts con Email : 1.477.322 
+
+SFImport_Boletos :  8.813.769
+
+Boletos de ('Chevallier','Flechabus','Urquiza','La Veloz') :   1.139.578 
+

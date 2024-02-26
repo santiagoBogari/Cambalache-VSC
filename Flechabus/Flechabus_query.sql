@@ -521,7 +521,8 @@ SELECT DISTINCT a.id,
        a.PersonBirthDate,
        a.Email__c,
        a.PersonEmail,
-       a.Phone
+       a.Phone,
+       a.Empresa_Venta__c
 FROM SFImport_Account AS a
 LEFT JOIN (
   SELECT DISTINCT *
@@ -605,7 +606,8 @@ WHERE
 
     -- (1215582 rows)
 
-    SELECT DISTINCT
+/* 
+SELECT DISTINCT
 AC.id,
 AC.PersonContactId,
 AC.Name as Nombre,
@@ -670,7 +672,7 @@ WHERE
           AND (AC.PersonEmail = LS.EmailAddress OR AC.Email__c = LS.EmailAddress)
     )
 
-    -- (455439 rows)  Results_acc_4emp_unBo
+    -- (455439 rows)  Results_acc_4emp_unBo */
 
     ---------------------------------------------------------------------------------------------21-2
     
@@ -840,7 +842,7 @@ INNER JOIN SFImport_Boletos AS BO
 WHERE  (AC.PersonEmail IS NOT NULL OR AC.Email__c IS NOT NULL) AND
  BO.Empresa_Venta__c IN ('Chevallier','Flechabus','Urquiza','La Veloz')
 
- -- (428731 rows)
+ -- (71528 rows)
 
  SELECT 
 AC.id,
@@ -1079,7 +1081,7 @@ GROUP BY
 
 ---- (65746 rows)  trae mismo resultado que con DISTINCT
 
-SELECT  
+SELECT
     BO.Nro_Documento__c,
     BO.id,
     BO.CreatedDate,
@@ -1114,21 +1116,119 @@ SELECT
     SA.PersonEmail
 FROM
     SFImport_Boletos AS BO
-LEFT JOIN
-    (
-        SELECT
-            id,
-            FirstName,
-            LastName,
-            Phone,
-            Email__c,
-            PersonEmail,
-            Nro_Documento__PC
-        FROM
-            SFImport_Account
-    ) AS SA
+INNER JOIN
+    SFImport_Account AS SA
     ON BO.Nro_Documento__c = SA.Nro_Documento__PC
 WHERE
-    BO.Empresa_Venta__c IN ('Chevallier','Flechabus','Urquiza','La Veloz')
+    (SA.PersonEmail IS NOT NULL OR SA.Email__c IS NOT NULL)
+    AND BO.Empresa_Venta__c IN ('Chevallier','Flechabus','Urquiza','La Veloz')
 
-    -- (1140200 rows)
+    -- (145.756 rows) 
+
+---------------------------------------------------------------------------------------------------26/2
+
+SELECT
+    BO.Nro_Documento__c,
+    BO.id,
+    BO.CreatedDate,
+    BO.Id_Boleto__c,
+    BO.Id__c,
+    BO.Agencia_Venta__c,
+    BO.C_digo_Calidad__c,
+    BO.C_digo_parada_origen__c,
+    BO.C_digo_parada_destino__c,
+    BO.C_digo_servicio__c,
+    BO.Codigo_boleto__c,
+    BO.Cuenta__c,
+    BO.Id_Pasajero_Salesforce__c,
+    BO.Id_Pasajero__c,
+    BO.Tipo_Documento__c,
+    BO.Empresa_Servicio__c,
+    BO.Empresa_Venta__c,
+    BO.Fecha_Venta__c,
+    BO.Fecha_Servicio__c,
+    BO.Kms_Operaci_n__c,
+    BO.Pa_s_Origen__c,
+    BO.Pa_s_Destino__c,
+    BO.Provincia_Origen__c,
+    BO.Provincia_Destino__c,
+    BO.Localidad_Origen__c,
+    BO.Localidad_Destino__c,
+    SA.id AS AccID,
+    SA.FirstName,
+    SA.LastName,
+    SA.Phone,
+    SA.Email__c,
+    SA.PersonEmail
+FROM
+    SFImport_Boletos AS BO
+INNER JOIN
+    SFImport_Account AS SA
+    ON BO.Nro_Documento__c = SA.Nro_Documento__PC
+WHERE
+    (SA.PersonEmail IS NOT NULL OR SA.Email__c IS NOT NULL)
+    AND BO.Empresa_Venta__c IN ('Chevallier','Flechabus','Urquiza','La Veloz')
+   AND NOT EXISTS (
+        SELECT 1
+        FROM Unsubscribed AS U
+        WHERE SA.Email__c = U.EmailAddress OR SA.PersonEmail = U.EmailAddress
+    )
+    AND NOT EXISTS (
+        SELECT 1
+        FROM Bounced_Emails_Name_Id AS BE
+        WHERE SA.Email__c = BE.EmailAddress OR SA.PersonEmail = BE.EmailAddress
+    )
+
+    -- (120.475 rows)
+
+    /*  */
+
+    SELECT
+    BO.Nro_Documento__c,
+    BO.id,
+    BO.CreatedDate,
+    BO.Id_Boleto__c,
+    BO.Id__c,
+    BO.Agencia_Venta__c,
+    BO.C_digo_Calidad__c,
+    BO.C_digo_parada_origen__c,
+    BO.C_digo_parada_destino__c,
+    BO.C_digo_servicio__c,
+    BO.Codigo_boleto__c,
+    BO.Cuenta__c,
+    BO.Id_Pasajero_Salesforce__c,
+    BO.Id_Pasajero__c,
+    BO.Tipo_Documento__c,
+    BO.Empresa_Servicio__c,
+    BO.Empresa_Venta__c,
+    BO.Fecha_Venta__c,
+    BO.Fecha_Servicio__c,
+    BO.Kms_Operaci_n__c,
+    BO.Pa_s_Origen__c,
+    BO.Pa_s_Destino__c,
+    BO.Provincia_Origen__c,
+    BO.Provincia_Destino__c,
+    BO.Localidad_Origen__c,
+    BO.Localidad_Destino__c,
+    SA.id AS AccID,
+    SA.FirstName,
+    SA.LastName,
+    SA.Phone,
+    SA.Email__c,
+    SA.PersonEmail
+FROM
+    SFImport_Boletos AS BO
+INNER JOIN
+    SFImport_Account AS SA
+    ON BO.Nro_Documento__c = SA.Nro_Documento__PC
+WHERE
+    (SA.PersonEmail IS NOT NULL OR SA.Email__c IS NOT NULL)
+    AND BO.Empresa_Venta__c IN ('Chevallier','Flechabus','Urquiza','La Veloz')
+    AND NOT EXISTS (
+        SELECT 1
+        FROM _ListSubscribers AS LS
+        WHERE (LS.Status = 'held' OR LS.Status = 'bounced' OR LS.Status = 'unsubscribed')
+          AND (SA.PersonEmail = LS.EmailAddress OR SA.Email__c = LS.EmailAddress)
+    )
+
+    -- 141.363 rows
