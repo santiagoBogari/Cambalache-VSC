@@ -213,7 +213,7 @@ from SFImport_Account as AC
 where AC.PersonEmail is not null or
 Email__c is not null
 
---(1474174 rows) 
+--(1.474.174 rows) 
 
 /*  */
 

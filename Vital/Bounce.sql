@@ -1263,6 +1263,8 @@ ubh.EmailAddress IS NULL AND
 bsmb.SubscriberKey IS NULL AND
 IsPersonAccount = '1'
 
-
-
+/*  */
+--  (8344 rows) bounce fmb + de 15 dias
+-- bounce fmb + de 15 dias  001Dn00000EC3NIIA1
+-- bounce fmb - de 15 dias  001Dn00000h6dLpIAI
 
