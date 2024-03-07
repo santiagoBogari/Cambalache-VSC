@@ -64,3 +64,142 @@ WHERE
     )
 
     -- (1.051.395 rows)  SFImport_Account_sin_bounceUns
+
+/* 
+    Buen día, adjunto los siguientes 3 archivos:
+
+    * 3-4-2024-SFImport_Account_con_mail
+    Data Extension: SFImport_Account_con_mail (1.479.243 rows)
+    Ubicación: Shared Items / Shared Data Extensions / SFImport_Account_con_mail
+    Descripción: Filtramos la DE SFImport_Account para obtener los que contienen un Email
+
+    * 3-6_SFImport_Account_sin_bounceUns
+    Data Extension: SFImport_Account_sin_bounceUns (1.051.395 rows)
+    Ubicación: Shared Items / Shared Data Extensions / SFImport_Account_sin_bounceUns
+    Descripción: Filtramos la DE SFImport_Account para obtener los que contienen un Email y les quitamos Bounce y Unsubcribed
+
+    * 3-6-2024-DE_Personas_Filtradas
+    Data Extension: DE_Personas_Filtradas (120.475 rows)
+    Ubicación: Shared Items / Shared Data Extensions / DE_Personas_Filtradas
+    Descripción: Filtramos la DE SFImport_Account quitamos emails duplicados, Bounces, Unsubscribes y empresas que no sean Flechabus, Chevallier, Urquiza y La Veloz
+    
+
+
+
+    
+    */
+/* 3 queries para obtener el restante de la tabla SFImport_Account */
+    SELECT TOP 1000000
+   id,
+   PersonContactId,
+   Name as Nombre,
+   FirstName,
+   LastName,
+   Type as Tipo,
+   RecordTypeId,
+   Phone as Telefono,
+   OwnerID,
+   CreatedDate as Fecha_Creacion,
+   AccountSource as Origen_Cuenta,
+   Tipo_de_Documento__PC,
+   Nro_Documento__pc,
+   ID_Pasajero__PC,
+   Id_del_pasajero__c,
+   Fecha_de_Nacimiento__c,
+   PersonBirthDate,
+   Email__c,
+   PersonEmail
+FROM SFImport_Account_remaining_subs
+ORDER BY id
+
+/*  */
+SELECT 
+ id,
+   PersonContactId,
+   Name as Nombre,
+   FirstName,
+   LastName,
+   Type as Tipo,
+   RecordTypeId,
+   Phone as Telefono,
+   OwnerID,
+   CreatedDate as Fecha_Creacion,
+   AccountSource as Origen_Cuenta,
+   Tipo_de_Documento__PC,
+   Nro_Documento__pc,
+   ID_Pasajero__PC,
+   Id_del_pasajero__c,
+   Fecha_de_Nacimiento__c,
+   PersonBirthDate,
+   Email__c,
+   PersonEmail
+FROM (
+   SELECT 
+   id,
+      PersonContactId,
+      Name,
+      FirstName,
+      LastName,
+      Type,
+      RecordTypeId,
+      Phone,
+      OwnerID,
+      CreatedDate,
+      AccountSource,
+      Tipo_de_Documento__PC,
+      Nro_Documento__pc,
+      ID_Pasajero__PC,
+      Id_del_pasajero__c,
+      Fecha_de_Nacimiento__c,
+      PersonBirthDate,
+      Email__c,
+      PersonEmail,
+      ROW_NUMBER() OVER (ORDER BY id) AS RowNumber
+   FROM SFImport_Account_remaining_subs
+) AS SubQuery
+WHERE RowNumber > 1000000 AND RowNumber <= 2000000
+/*  */
+SELECT AccountId,
+   PersonContactId,
+   Name as Nombre,
+   FirstName,
+   LastName,
+   Type as Tipo,
+   RecordTypeId,
+   Phone as Telefono,
+   OwnerID,
+   CreatedDate as Fecha_Creacion,
+   AccountSource as Origen_Cuenta,
+   Tipo_de_Documento__PC,
+   Nro_Documento__pc,
+   ID_Pasajero__PC,
+   Id_del_pasajero__c,
+   Fecha_de_Nacimiento__c,
+   PersonBirthDate,
+   Email__c,
+   PersonEmail
+FROM (
+   SELECT AccountId,
+      PersonContactId,
+      Name,
+      FirstName,
+      LastName,
+      Type,
+      RecordTypeId,
+      Phone,
+      OwnerID,
+      CreatedDate,
+      AccountSource,
+      Tipo_de_Documento__PC,
+      Nro_Documento__pc,
+      ID_Pasajero__PC,
+      Id_del_pasajero__c,
+      Fecha_de_Nacimiento__c,
+      PersonBirthDate,
+      Email__c,
+      PersonEmail,
+      ROW_NUMBER() OVER (ORDER BY AccountId) AS RowNumber
+   FROM SFImport_Account
+) AS SubQuery
+WHERE RowNumber > 2000000
+/*  */
