@@ -1246,7 +1246,6 @@ AC.Rubro__pc as Rubro,
 AC.Empleados_de_la_Compa_a__pc as Empleados_de_la_Compra,
 AC.Industria_de_la_Compa_a__pc as Industria_de_la_Compra
 
-
 from SFImport_Accounts_4 as AC
 INNER JOIN RecordType AS rt ON rt.Id = AC.RecordTypeId
 left join SFImport_Pais as P on AC.Pais__c = P.Id

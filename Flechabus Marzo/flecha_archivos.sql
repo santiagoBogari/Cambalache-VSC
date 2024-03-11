@@ -17,7 +17,7 @@ Ubicación: Shared Items / Shared Data Extensions / DE_Personas_Filtradas
     Los campos que nos servirían son:
 "Fecha de creación de registro" 
 "Nombre"
-"Apellido"
+"Apellido" 
 "DNI" 
 "email" 
 */
