@@ -68,7 +68,6 @@ Leads.Localidad__c as Localidad,
 Leads.Provincia__c as Provincia,
 Leads.Pais__c as Pais,
 Leads.Rubro__c as Rubro,
-Leads.Tipo__c,
 RecordType.Name
 from Leads_2 as Leads
 left join SFIMport_Accounts_4 on 
