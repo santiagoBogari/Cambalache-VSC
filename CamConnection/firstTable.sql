@@ -39,3 +39,44 @@ LEFT JOIN SFImport_Contacts as co on ac.Id = co.AccountId
 LEFT JOIN SFImport_Opportunity as op on ac.Id = op.AccountId
 WHERE co.Email IS NOT NULL AND (co.MailingCountry IS NOT NULL OR )
 GROUP BY co.Email, ac.Id, ac.Name, ac.Industry
+/*  */
+SELECT ac.Id as AccountId, ac.Name as AccountName, ac.Industry as Industry,
+       MAX(co.Name) as ContactName, co.Email as ContactEmail,
+       MAX(co.MailingCountry) as MailingCountry,
+       MAX(op.Name) as OpportunityName, MAX(op.StageName) as OpptyStageName, MAX(op.Type) as OpptyType,
+       MAX(op.Region__c) as OpptyRegion, MAX(op.Brand__c) as OpptyBrand, MAX(op.Area__c) as OpptyArea
+FROM SFImport_Accounts as ac
+LEFT JOIN SFImport_Contacts as co on ac.Id = co.AccountId
+LEFT JOIN SFImport_Opportunity as op on ac.Id = op.AccountId
+WHERE co.Email IS NOT NULL 
+GROUP BY co.Email, ac.Id, ac.Name, ac.Industry
+/* 5259 rows */
+
+/* con SHIPPINGCOUNTRY */
+SELECT
+  ac.Id as AccountId,
+  ac.Name as AccountName,
+  ac.Industry as Industry,
+  MAX(co.Name) as ContactName,
+  co.Email as ContactEmail,
+  MAX(co.MailingCountry) as MailingCountry,
+  ac.ShippingCountry as ShippingCountry,  
+  MAX(op.Name) as OpportunityName,
+  MAX(op.StageName) as OpptyStageName,
+  MAX(op.Type) as OpptyType,
+  MAX(op.Region__c) as OpptyRegion,
+  MAX(op.Brand__c) as OpptyBrand,
+  MAX(op.Area__c) as OpptyArea
+FROM
+  SFImport_Accounts as ac
+  LEFT JOIN SFImport_Contacts as co ON ac.Id = co.AccountId
+  LEFT JOIN SFImport_Opportunity as op ON ac.Id = op.AccountId
+WHERE
+  co.Email IS NOT NULL
+GROUP BY
+  co.Email,
+  ac.Id,
+  ac.Name,
+  ac.Industry,
+  ac.ShippingCountry
+  /* 5259 */
