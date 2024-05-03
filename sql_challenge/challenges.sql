@@ -20,3 +20,14 @@ SELECT
 FROM [NextMobile Loyalty]
 WHERE 
     points * 1.5 >= 150000
+
+--day 05
+SELECT id, 
+email
+FROM NextMobile_Services
+Where internet = 'Fibe 500' OR mobility = 'Essential 120'
+
+--day 06
+SELECT id
+FROM NextMobile_Community
+Where is_active = 1 AND logged_12_months = 0
