@@ -120,3 +120,19 @@ LEFT JOIN Unsubscribed_1895_1_BBDD_Maestra AS u1bm ON u1bm.Email = CO.Email
 WHERE GC.Id IS NULL AND
 u1bm.Email IS NULL AND
 ubh.EmailAddress IS NULL
+
+
+/* test, quitar bounces  */
+SELECT
+CO.Id,
+CO.Email,
+CO.Name
+FROM SFIMport_Contacts as CO
+INNER JOIN Empresas as EMP on CO.AccountId = EMP.Id
+
+LEFT JOIN Unsubscribed_Bounce_Held AS ubh ON ubh.EmailAddress = CO.Email
+LEFT JOIN Unsubscribed_1895_1_BBDD_Maestra AS u1bm ON u1bm.Email = CO.Email
+WHERE 
+u1bm.Email IS NULL AND
+ubh.EmailAddress IS NULL AND CO.Email IS NOT NULL
+/* (28180 rows) */
