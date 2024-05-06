@@ -11,8 +11,6 @@ WHERE CO.Email IS NOT NULL
 /*  */
 
 
-
-
 SELECT OPP.Id, OPP.AccountId, OPP.CloseDate
 FROM Oportunidades as OPP
 WHERE OPP.StageName = 'Cerrada/Ganada' 
