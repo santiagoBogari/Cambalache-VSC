@@ -13,7 +13,7 @@ FROM _Subscribers
 WHERE
 Status IN ('unsubscribed','held','bounce')
 
-/* (65.526 rows) */
+/* (65551 rows) */
 
 SELECT
         _Subscribers.SubscriberID,
@@ -65,7 +65,7 @@ LEFT JOIN _Subscribers
         ON _Bounce.SubscriberID = _Subscribers.SubscriberID
 WHERE _Bounce.BounceCategory <> 'Soft bounce'  
 
-/* (32608 rows) */
+/* (32457 rows) */
 
 /*  */
 SELECT
@@ -104,3 +104,55 @@ SELECT
         _Bounce.TriggeredSendCustomerKey
 FROM _Bounce
 /* (46522 rows) */
+
+SELECT
+        _Subscribers.SubscriberID,
+        _Subscribers.SubscriberKey,
+        _Subscribers.DateUndeliverable,
+        _Subscribers.DateJoined,
+        _Subscribers.DateUnsubscribed AS SubscribersDateUnsubscribed,
+        _Subscribers.Domain,
+        _Subscribers.EmailAddress,
+        _Subscribers.BounceCount,
+        _Subscribers.SubscriberType AS SubscribersSubscriberType,
+        _Subscribers.Status AS SubscribersStatus,
+        _Subscribers.Locale
+FROM _Subscribers
+
+/*  */
+
+SELECT
+        _Bounce.AccountID,
+        _Bounce.JobID,
+        _Bounce.SubscriberID,
+        _Bounce.SubscriberKey,
+        _Bounce.EventDate AS BounceEventDate,
+        _Bounce.Domain,
+        _Subscribers.EmailAddress,
+        _Subscribers.BounceCount,
+        _Subscribers.Status AS SubscribersStatus
+FROM _Bounce
+LEFT JOIN _Subscribers 
+        ON _Bounce.SubscriberID = _Subscribers.SubscriberID
+WHERE _Subscribers.Status IN ('unsubscribed','held','bounced') AND _Bounce.BounceCategory <> 'Soft bounce'  
+
+/* (18985 rows) */
+
+/*  */
+SELECT
+        _Bounce.AccountID,
+        _Bounce.JobID,
+        _Bounce.SubscriberID,
+        _Bounce.SubscriberKey,
+        _Bounce.EventDate AS BounceEventDate,
+        _Bounce.Domain,
+        _Subscribers.EmailAddress,
+        _Subscribers.BounceCount,
+        _Bounce.BounceCategory,
+        _Subscribers.Status AS SubscribersStatus
+FROM _Bounce
+LEFT JOIN _Subscribers 
+        ON _Bounce.SubscriberID = _Subscribers.SubscriberID
+WHERE NOT (_Bounce.BounceCategory = 'Soft bounce' AND _Subscribers.BounceCount < 3) AND _Subscribers.Status <> 'active'
+
+/*  (35427 rows) */

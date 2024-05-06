@@ -60,3 +60,19 @@ u1bm.Email IS NULL AND
 ubh.EmailAddress IS NULL AND CO.Email IS NOT NULL
 
 /* DE Contactos_con_Empresas */
+
+/* Automation: Data_View_Sent */
+Select
+AccountID,
+OYBAccountID, 
+JobID, 
+ListID, 
+BatchID, 
+SubscriberID, 
+SubscriberKey, 
+EventDate, 
+Domain, 
+TriggererSendDefinitionObjectID, 
+TriggeredSendCustomerKey
+From _Sent
+/*  */
