@@ -75,4 +75,4 @@ Domain,
 TriggererSendDefinitionObjectID, 
 TriggeredSendCustomerKey
 From _Sent
-/*  */
+/* Target Data Extension : Sent ,Data Extension	Sent, Data Action	Update */
