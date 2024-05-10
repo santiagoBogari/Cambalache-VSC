@@ -55,3 +55,11 @@ ON a.salesman_id = c.salesman_id
 
 -- ej.7
 
+__________________________________________________________________
+SELECT
+    Client_id,
+    CAST(AVG(CONVERT(DECIMAL, monto_cobrado)) AS DECIMAL(18, 2)) AS TicketProm_Last60_GO
+FROM Base_Barracuda_Data
+WHERE order_type = 'GO'
+AND fecha_orden_mioxxo >= DATEADD(day, -60, GETDATE())
+GROUP BY Client_id
