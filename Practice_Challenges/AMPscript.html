@@ -1,0 +1,80 @@
+<!-- Challenge 01 -->
+Hi ! This is my solution for my first challenge! 😁
+%%[
+Var @FirstName, @LastName, @Address, @Email, @fullName, @preferences, @dob
+Set @FirstName = ProperCase(First_Name)
+Set @LastName = ProperCase(Last_Name)
+Set @Address = Concat(Street_Address, ", ", State, ", ", Post_Code, ", ", Country)
+Set @Email = LowerCase(Email)
+Set @fullName = concat(@FirstName," ",@LastName)
+Set @preferences = ProperCase(Preferences)
+Set @dob = FormatDate(AttributeValue("Date_of_Birth"), "MM/dd/yyyy")
+]%%
+<title>Registration Confirmation</title>
+<h1>Registration Confirmation</h1>
+<p>Hi %%=v(@FirstName)=%%,</p>
+<p>Thank you for registering with us!</p>
+<p> Here are the details we have on file for you:</p>
+<ul>
+<li>Name: %%=v(@fullName)=%%</li>
+<li>Preferences: %%=v(@preferences)=%%</li>
+<li>Phone Number: %%=v(Phone_Number)=%%</li>
+<li>Address: %%=v(@Address)=%%</li>
+<li>Email: %%=v(@Email)=%%</li>
+<li>Date of Birth: %%=v(@dob)=%%</li>
+</ul>
+<p> If any of these details are incorrect, please click <a href="%%profile_center_url%%">here</a> to update your information.</p>
+<p>Best regards</p>
+<p>The Team </p>
+
+<!-- Challenge 01 , Solution-->
+%%[
+
+SET @firstName = [First Name]
+SET @lastName = [Last Name]
+SET @pref = [Preferences]
+SET @phone = [Phone Number]
+SET @streetaddress = [Street Address]
+SET @postcode = [PostCode]
+SET @state = [State]
+SET @country = [Country]
+SET @email = [Email]
+SET @dob = [Date of Birth]
+
+/* Lógica para limpiar el nombre */
+
+SET @firstNameTrim = Trim(@firstName)
+SET @finalFirstName = Propercase(@firstNameTrim)
+
+SET @lastNameTrim = Trim(@lastName)
+SET @finalLastName = Propercase(@lastNameTrim)
+
+SET @finalFullName = Concat(@finalFirstName, " ", @finalLastName)
+
+/* Lógica para el formato de correo electrónico */
+
+SET @emailLower = Lowercase(@email)
+
+SET @fullAddress = Concat(@streetaddress, ", ", @state, ", ", @postcode, ", ", @country)
+
+]%%
+
+
+<!-- La función "Trim" en AMPscript se utiliza para eliminar los espacios en blanco (antes y después) de una cadena de texto. -->
+
+<!--  -->
+<!-- Challenge 02 -->
+<!--  -->
+
+%%[
+SET @firstName = AttributeValue("First Name")
+SET @anniversaryDate = AttributeValue("Anniversary Date")
+SET @discountCode = Concat("25OFF", ProperCase(@firstName), FormatDate(@anniversaryDate, "YYYYMMdd"))
+
+SET @message = Concat("Dear ", ProperCase(@firstName), ",\n\nThank you for being a loyal customer for ", AttributeValue("Tenure"), " years. We are delighted to celebrate your anniversary with us!\n\nAs a token of appreciation, please enjoy a unique discount code for your next purchase: ", @discountCode, "\n\nWe look forward to serving you again!\n\nBest regards,\nYour Retail Brand")
+
+/* Send SMS */
+SET @mobileNumber = AttributeValue("Mobile Number")
+SET @smsStatus = SendSMS(@message, @mobileNumber)
+
+]%%
