@@ -156,3 +156,25 @@ LEFT JOIN _Subscribers
 WHERE NOT (_Bounce.BounceCategory = 'Soft bounce' AND _Subscribers.BounceCount < 3) AND _Subscribers.Status <> 'active'
 
 /*  (35427 rows) */
+
+/* SubscriberID  únicos  */
+SELECT DISTINCT
+    _Bounce.SubscriberID
+FROM _Bounce
+LEFT JOIN _Subscribers ON _Bounce.SubscriberID = _Subscribers.SubscriberID
+/* (17967 rows) */
+
+/*  */
+SELECT DISTINCT
+    _Subscribers.EmailAddress
+FROM _Bounce
+LEFT JOIN _Subscribers ON _Bounce.SubscriberID = _Subscribers.SubscriberID
+
+/* (17960 rows) */
+
+/*  */
+SELECT DISTINCT
+    _Bounce.SubscriberKey
+FROM _Bounce
+LEFT JOIN _Subscribers ON _Bounce.SubscriberID = _Subscribers.SubscriberID
+/* (17962 rows) */
