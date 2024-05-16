@@ -178,3 +178,64 @@ SELECT DISTINCT
 FROM _Bounce
 LEFT JOIN _Subscribers ON _Bounce.SubscriberID = _Subscribers.SubscriberID
 /* (17962 rows) */
+
+/* query para autosuppression list */
+Select B.SubscriberKey, B.EventDate, B.BounceCategory, B.BounceSubcategory, J.EmailAddress
+from [_bounce] B
+inner Join [_Subscribers] J
+on J.SubscriberKey = B.SubscriberKey
+where B.EventDate > dateadd(hour, -24, getdate())
+AND B.BounceSubcategory = 'User Unknown' OR B.BounceSubcategory = 'Inactive Account'
+/*  */
+
+
+/* eliotharper/UpdateQuery.js */
+
+<script language="javascript" runat="server">
+// Author: Eliot Harper <eliot@eliot.com.au>
+// Revision date: January 31, 2021
+
+// DISCLAIMER
+// While due care has been taken in the preparation of this
+// supplied code example, no liability is assumed for incidental
+// or consequential damages in connection with or arising out its 
+// use. Example code is provided on an "as is" basis and no 
+// expressed or implied warranty of any kind is made for the 
+// suitability of this code for your purpose. Salesforce Marketing 
+// Cloud operational procedures and programming methods may change 
+// between releases and you are solely responsible for determining 
+// whether this code is applicable for your intended use.
+
+Platform.Load('Core', '1');
+
+var prox = new Script.Util.WSProxy();
+
+var queryStr = '';
+    queryStr += 'SELECT';
+    queryStr += '\n_Subscribers.SubscriberID,';
+    queryStr += '\n_Subscribers.SubscriberKey,';
+    queryStr += '\n_Subscribers.DateUnsubscribed AS DateUnsubscribed';  
+    queryStr += '\n_Subscribers.Domain,';
+    queryStr += '\n_Subscribers.EmailAddress,';
+    queryStr += '\n_Subscribers.BounceCount,';
+    queryStr += '\n_Subscribers.Status AS Status';
+    queryStr += '\nFROM _Subscribers';
+    queryStr += '\n_WHERE  _Subscribers.Status = 'unsubscribed'';
+
+  var queryDef = {
+    CustomerKey: 'D87F630C-78EF-465E-B3A2-4FA90AE4551D',
+    ObjectID: 'd87f630c-78ef-465e-b3a2-4fa90ae4551d',
+    QueryText: queryStr,
+    TargetType: 'DE',
+    TargetUpdateType: 'Update',
+    DataExtensionTarget: {
+      CustomerKey: '624CFAB6-F204-462A-8A26-8D4E27BE2644',
+      Name: 'SB_AutoSuppression_List'
+    }
+  };
+var updateQuery = prox.updateItem('QueryDefinition', queryDef);
+
+Write('result: ' + Stringify(updateQuery))
+
+</script>
+/*  */
