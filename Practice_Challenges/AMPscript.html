@@ -78,3 +78,30 @@ SET @mobileNumber = AttributeValue("Mobile Number")
 SET @smsStatus = SendSMS(@message, @mobileNumber)
 
 ]%%
+
+<!-- Second challenge -->
+%%[
+
+/* RETRIEVE FIELDS */
+
+SET @FirstName = [First Name]
+
+SET @anniversaryDate = [Anniversary Date]
+
+SET @tenure = [Tenure]
+
+/* LOGIC FOR FIRST NAME */
+
+SET @FirstNameTrim = Trim(@FirstName)
+
+SET @finalName = Propercase(@firstNameTrim)
+
+SET @firstNameUpper = Uppercase(@firstNameTrim)
+
+/* LOGIC FOR DATE FORMAT */
+
+SET @annFormat = FormatDate(@anniversaryDate, "YYYYMMdd")
+/* LOGIC FOR DISCOUNT CODE */
+
+SET @discountCode = CONCAT("200FF",@firstNameUpper,@annFormat)
+]%%
