@@ -105,3 +105,65 @@ SET @annFormat = FormatDate(@anniversaryDate, "YYYYMMdd")
 
 SET @discountCode = CONCAT("200FF",@firstNameUpper,@annFormat)
 ]%%
+
+
+<!-- <meta charset="UTF-8">
+    <title>Order Shipment Notification</title>
+
+
+    <p>Dear %%=v(@FirstName)=%%,</p>
+    <p>Your order for %%=v(@Quantity)=%% x %%=v(@ProductName)=%% has been shipped.</p>
+    <p>Order Details:</p>
+    <ul>
+        <li>Product: %%=v(@ProductName)=%%</li>
+        <li>Quantity: %%=v(@Quantity)=%%</li>
+        <li>Purchase Date: %%=FormatDate(@PurchaseDate, "MMM dd, yyyy")=%%</li>
+        <li>Estimated Delivery Date: %%=FormatDate(@EstimatedDeliveryDate, "MMM dd, yyyy")=%% (in %%=DateDiff(@EstimatedDeliveryDate, Now(), "D")=%% days)</li>
+        <li>Shipping Address: %%=v(@StreetName)=%%, %%=v(@City)=%%, %%=v(@Postcode)=%%, %%=v(@State)=%%, %%=v(@Country)=%%</li>
+    </ul>
+    <p>Thank you for choosing our services.</p>  -->
+
+    %%[
+SET @FirstName = AttributeValue("First Name")
+SET @ProductName = AttributeValue("Product Name")
+SET @Quantity = AttributeValue("Quantity")
+SET @PurchaseDate = FormatDate(AttributeValue("Purchase Date"), "MMM dd, yyyy")
+SET @EstimatedDeliveryDate = FormatDate(AttributeValue("Estimated Delivery Date"), "MMM dd, yyyy")
+SET @StreetName = AttributeValue("Street Name")
+SET @City = AttributeValue("City")
+SET @Postcode = AttributeValue("Postcode")
+SET @State = AttributeValue("State")
+SET @Country = AttributeValue("Country")
+]%%
+
+Hi %%=v(@FirstName)=%%!<br><br>
+
+📦 Your order of %%=v(@Quantity)=%%x %%=v(@ProductName)=%%, purchased on Purchase Date: %%=v(@PurchaseDate)=%%, has been shipped.
+
+It is estimated to be delivered in %%=DateDiff(@EstimatedDeliveryDate, Now(), "D")=%% days by %%=v(@EstimatedDeliveryDate)=%% to the following address: %%=v(@StreetName)=%%, %%=v(@City)=%%, %%=v(@Postcode)=%%, %%=v(@State)=%%, %%=v(@Country)=%%.
+
+<!--  -->
+
+%%[
+SET @FirstName = AttributeValue("First Name")
+SET @ProductName = AttributeValue("Product Name")
+SET @Quantity = AttributeValue("Quantity")
+SET @PurchaseDate = FormatDate(AttributeValue("Purchase Date"), "MMM dd, yyyy")
+SET @EstimatedDeliveryDate = AttributeValue("Estimated Delivery Date")
+SET @StreetName = AttributeValue("Street Name")
+SET @City = AttributeValue("City")
+SET @Postcode = AttributeValue("Postcode")
+SET @State = AttributeValue("State")
+SET @Country = AttributeValue("Country")
+]%%
+
+Hi %%=v(@FirstName)=%%!
+
+📦 Your order of %%=v(@Quantity)=%%x %%=v(@ProductName)=%%, purchased on Purchase Date: %%=v(@PurchaseDate)=%%, has been shipped.
+
+It is estimated to be delivered in <x> days by %%=v(@EstimatedDeliveryDate)=%% to the following address: %%=v(@StreetName)=%%, %%=v(@City)=%%, %%=v(@Postcode)=%%, %%=v(@State)=%%, %%=v(@Country)=%%.</x>
+
+
+SET @fullAddress = Concat(@EstimatedD, ", ", @City, ", ", @Postcode, ", ",@State, ", ",@Country)
+
+“123 Main St, Sydney, 2000, NSW, Australia”
