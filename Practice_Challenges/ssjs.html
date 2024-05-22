@@ -1,10 +1,14 @@
 SSJS: <br>
-<script runat=server>
+<script runat="server">
   Platform.Load("Core","1");
 var x = 3;
 var y = 9;
 var z = x + y;
   Write("My math is equal to: "+z);
+ 
+var v = 1;
+if(v==1){Write("True");}
+  else{Write("False");}
 </script>
 
 <br><br><br>
@@ -16,5 +20,49 @@ SET @y = 6
 SET @z = add(@x,@y)
 SET @str = "My math is equal to: "
 outputline(concat(@str,@z))
-
+<br>
+SET @v=1
+IF @v==1 THEN
+SET @msj = "TRUE"
+ELSE
+SET @msj = "FALSE"
+ENDIF
+outputline(v(@msj))
 ]%%
+
+<!-- --------------------------------------------- -->
+
+SSJS: <br>
+<script runat="server">
+  Platform.Load("Core","1");
+var json = 
+{
+  "Flights": [
+    {
+      "Origin": "IND",
+      "Dest": "NYC",
+      "Price": 100.0
+    },
+    {
+      "Origin": "IND",
+      "Dest": "LAX",
+      "Price": 200.0
+    },
+    {
+      "Origin": "IND",
+      "Dest": "SEA",
+      "Price": 500.0,
+      "PerBagSurcharge": 25
+    }
+  ]
+}
+Write("<table border=1><tr><th>Origin</th><th>Dest</th><th>Price</th><th>PerBagSurcharge</th></tr></table>")
+
+Write(json.Flights[2].Price);
+</script>
+
+<br><br><br>
+
+AMPScript: <br>
+
+
