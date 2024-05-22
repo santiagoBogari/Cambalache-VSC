@@ -1,0 +1,20 @@
+SSJS: <br>
+<script runat=server>
+  Platform.Load("Core","1");
+var x = 3;
+var y = 9;
+var z = x + y;
+  Write("My math is equal to: "+z);
+</script>
+
+<br><br><br>
+
+AMPScript: <br>
+%%[
+SET @x = 3
+SET @y = 6
+SET @z = add(@x,@y)
+SET @str = "My math is equal to: "
+outputline(concat(@str,@z))
+
+]%%
