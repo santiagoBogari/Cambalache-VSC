@@ -65,4 +65,39 @@ Write(json.Flights[2].Price);
 
 AMPScript: <br>
 
+<!-- ---------------------------------------------------------- -->
+<script runat="server">
+  Platform.Load("Core","1");
+var json = 
+{
+  "Flights": [
+    {
+      "Origin": "IND",
+      "Dest": "NYC",
+      "Price": 100.0
+    },
+    {
+      "Origin": "IND",
+      "Dest": "LAX",
+      "Price": 200.0
+    },
+    {
+      "Origin": "IND",
+      "Dest": "SEA",
+      "Price": 500.0,
+      "PerBagSurcharge": 25
+    }
+  ]
+}
+var airports = {"IND":"Indianapolis","NYC":"New York","SEA":"Seattle","LAX":"Los Angeles"}
+function codetoname(code){
+  var name = airports[code];
+  return name
+}
 
+Write("<table border=1><tr><th>Origin</th><th>Dest</th><th>Price</th><th>PerBagSurcharge</th></tr>");
+for(var i=0; i<json.Flights.length;i++){
+Write("<tr><td>"+codetoname(json.Flights[i].Origin)+"</td><td>"+codetoname(json.Flights[i].Dest)+"</td><td>"+json.Flights[i].Price+"</td><td>"+((json.Flights[i].PerBagSurcharge !== undefined)? json.Flights[i].PerBagSurcharge : "")+"</td></tr>")
+}
+Write("</table>");
+</script>
