@@ -167,3 +167,30 @@ It is estimated to be delivered in <x> days by %%=v(@EstimatedDeliveryDate)=%% t
 SET @fullAddress = Concat(@EstimatedD, ", ", @City, ", ", @Postcode, ", ",@State, ", ",@Country)
 
 “123 Main St, Sydney, 2000, NSW, Australia”
+
+
+<!--  -->
+<!-- Challenge 04 -->
+<!--  -->
+
+%%[
+
+SET @FirstName = Propercase(AttributeValue("First Name"))
+SET @MembershipTier = AttributeValue("Membership Tier")
+SET @ExpiryDate = FormatDate(AttributeValue("Expriy Date"), "MMM dd, yyyy")
+SET @BalancePoints = AttributeValue("Balance Points")
+SET @CreditPoints = AttributeValue("CreditPoints")
+SET @OrgMobileNumber = "0410456890"
+SET @RemainingDays = DateDiff(Now(), @ExpiryDate, "D")
+SET @NewExpiryDate = DateAdd(@ExpiryDate, 1, "Y")
+SET @FormattedNewExpiryDate = FormatDate(@NewExpiryDate, "MMM dd, yyyy")
+
+]%%
+
+Hi %%=v(@FirstName)=%%! 🎉
+
+    Your %%=v(@MembershipTier)=%% membership is expiring soon. You have %%=v(@RemainingDays)=%% days left to renew. 
+        Renew by %%=v(@ExpiryDate)=%% to keep your %%=v(@CreditPoints)=%% credit points 
+            and enjoy all the benefits until %%=v(@FormattedNewExpiryDate)=%%. Check your email for renewal details.
+    <br><br>
+ To manage your consent, our organisation's mobile number is %%=v(@OrgMobileNumber)=%%
