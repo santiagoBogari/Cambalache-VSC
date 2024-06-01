@@ -194,3 +194,47 @@ Hi %%=v(@FirstName)=%%! 🎉
             and enjoy all the benefits until %%=v(@FormattedNewExpiryDate)=%%. Check your email for renewal details.
     <br><br>
  To manage your consent, our organisation's mobile number is %%=v(@OrgMobileNumber)=%%
+
+ <!-- week 4 solution : -->
+ %%[
+
+/* RETRIEVE FIELDS */
+SET @firstName = [First Name]
+SET @tier = [Membership Tier]
+SET @expDate = [Expriy Date]
+SET @creditPts = [CreditPoints]
+
+/* FNAME CLEAN UP */
+SET @fnameTrim = Trim(@firstName)
+SET @finalName = Propercase(@fnameTrim)
+
+/* CALCULATE REMAINING DAYS */
+SET @systemDate = Now(1)
+SET @localDate = SystemDateToLocalDate(@systemDate)
+SET @remainingDays = DATEDIFF(@localDate, @expDate, "D")
+
+/* FORMAT CREDIT POINTS */
+SET @creditPtsFormat = FormatNumber(@creditPts, "#,###")
+
+/* ADD 1 YEAR TO EXPIRY DATE */
+SET @newExpDate = DATEADD(@expDate, 1, "Y")
+
+/* REFORMAT DATE */
+SET @expryDateFormat = FormatDate(@expDate, "MMM dd, YYYY")
+SET @newExpDateFormat = FormatDate(@newExpDate, "MMM dd, YYYY")
+
+]%%
+
+<!-- 
+Input the variables into the template below.
+Template:
+Hi %%=V(@finalName)=%%! 🎉
+
+Your %%=V(@tier)=%% membership is expiring soon. You have %%=V(@remainingDays)=%% days left to renew. Renew by %%=V(@expryDateFormat)=%% to keep your %%=V(@creditPtsFormat)=%% credit points and enjoy all the benefits until %%=V(@newExpDateFormat)=%%. Check your email for renewal details.
+
+Reply STOP to 0410456890 to opt out of messages. 
+ -->
+
+<!--  -->
+
+
