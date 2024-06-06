@@ -262,3 +262,51 @@ Just a reminder, your next scheduled class is on %%=v(@formatDate)=%%.<br> We ca
 Best regards,
 Your Fitness Club Team
  -->
+
+ <!-- -------------------------------------------------------------- -->
+
+ %%[
+var @de = DataExtension.Init('SB_email_form_de'),
+var @rows = @de.Rows.Retrieve()
+for @i = 1 to RowCount(@rows) do
+    var @row = Row(@rows, @i);
+    var @modif_date = Field(@row, "Modif_Date");
+    var @new_modif_date = FormatDate(@modif_date, "MM/dd/yyyy");
+
+    // Update the Modif_Date field in the Data Extension
+    @de.Rows.Update(@row, {"Modif_Date": @new_modif_date});
+next @i
+]%%
+
+%%[
+set @today = FormatDate(Now(), "M/d/yyyy")
+
+set @order_details = LookupRows("SB_email_form_de", 'Modif_Date', @today)
+
+set @count = RowCount(@order_details)
+
+]%%
+%%=v(FormatDate(Now(1),"MM/dd/yyyy"))=%%
+Buenos días,<br>
+Éstos son los clientes para contactar el día de hoy:<br><br>
+
+
+%%[
+
+IF @count >0 THEN
+
+FOR @counter = 1 to @count DO
+SET @Row= Row(@order_details,@counter)
+SET @product = Field(@Row, "Phone")
+SET @product2 = Field(@Row, "SubscriberKey")
+SET @price = Field(@Row, "pref_contact_mode")]%%
+
+%%=v(@product)=%%:&nbsp;&nbsp;%%=v(@product2)=%% 👌 $ %%=v(@price)=%% <br>
+%%[
+NEXT @counter
+ENDIF]%%
+<br><br>
+
+If you have any questions, reply to this email or contact us at hello@nexttelecom.com
+Best regards,Next TelecomCrafted with 💜 by AMPscript30.AMPScripted Smiles Ltd.456 
+Data Extension Drive Suite 321, Loop City,Variable Valley, DE 12345

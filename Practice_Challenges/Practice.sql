@@ -55,7 +55,7 @@ ON a.salesman_id = c.salesman_id
 
 -- ej.7
 
-__________________________________________________________________
+-------------------------------------------------------------------
 SELECT
     Client_id,
     CAST(AVG(CONVERT(DECIMAL, monto_cobrado)) AS DECIMAL(18, 2)) AS TicketProm_Last60_GO
@@ -63,3 +63,26 @@ FROM Base_Barracuda_Data
 WHERE order_type = 'GO'
 AND fecha_orden_mioxxo >= DATEADD(day, -60, GETDATE())
 GROUP BY Client_id
+
+-------------------------------------------------------------------
+/* obtiene por la parte de la fecha y no la hora  */
+
+SELECT pref_contact_mode, Phone, Modif_Date
+FROM SB_email_form_de
+WHERE CONVERT(date, Modif_Date) = CONVERT(date, GETDATE())
+
+
+/*  */
+
+SELECT ef.pref_contact_mode as Contact_Preference, ef.Phone 
+FROM [SB_email_form_de] ef
+INNER JOIN [SB_Registration_Email] re ON re.SubscriberKey = ef.SubscriberKey
+WHERE CONVERT(date, Modif_Date) = CONVERT(date, GETDATE())
+
+-------------------------------------------------------------------
+
+SELECT Modif_Date
+
+FROM SB_email_form_de
+
+"MM/dd/yyyy"
