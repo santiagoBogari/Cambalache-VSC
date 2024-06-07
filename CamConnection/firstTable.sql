@@ -205,3 +205,22 @@ FROM
 WHERE RowNum = 1
 
 /* (7645 rows) */
+
+/*  */
+UNION
+SELECT
+    bb.Id,
+    bb.Name,
+    bb.Email,
+    'SFImport_Contacts' AS DataExtension
+FROM SFImport_Contacts bb
+WHERE bb.Email IS NOT NULL
+UNION
+SELECT
+    bc.Id,
+    bc.Name,
+    bc.Email,
+    'SFImport_Lead_2' AS DataExtension
+FROM SFImport_Lead_2 bc
+WHERE bc.Email IS NOT NULL
+/*  */
