@@ -310,3 +310,35 @@ ENDIF]%%
 If you have any questions, reply to this email or contact us at hello@nexttelecom.com
 Best regards,Next TelecomCrafted with 💜 by AMPscript30.AMPScripted Smiles Ltd.456 
 Data Extension Drive Suite 321, Loop City,Variable Valley, DE 12345
+
+<!-- June - week 2 -->
+
+%%[
+SET @FirstName = Propercase(AttributeValue("First Name"))
+SET @CarMake = Uppercase(AttributeValue("CarMake"))
+SET @CarModel = AttributeValue("CarModel")
+SET @rego = AttributeValue("rego")
+SET @regDate = AttributeValue("RegistrationDate")
+SET @regDateFormated = FormatDate(@regDate, "dd/MM/yyyy")
+SET @color = AttributeValue("CarColor")
+SET @today = Now()
+SET @scheduledClass = DateAdd(@today, 14, "D")
+SET @formatDate = FormatDate(@scheduledClass, "MMMM d, yyyy")
+]%%
+
+
+<!-- Hello %%=v(@FirstName)=%%, <br>
+
+We are writing to inform you of an important recall for your  %%=v(@CarMake)=%% %%=v(@CarModel)=%%. According to our records, your vehicle with the rego number %%=v(@rego)=%%, registered on %%=v(@regDateFormated)=%%, needs to be brought in for a service repair. <br>
+
+Please return your %%=v(@CarMake)=%% %%=v(@CarModel)=%% %%=v(@color)=%% by %%=v(@formatDate)=%% to ensure your vehicle is safe to drive. <br>
+
+We apologize for any inconvenience this may cause and appreciate your prompt attention to this matter. <br>
+
+Best regards, <br>
+
+Your Car Service Team <br>
+
+P.S. If you have any questions or need to reschedule, please contact us at support@carservice.com.<br>
+
+Unsubscribe here to stop receiving all communications from us. -->
