@@ -342,3 +342,25 @@ Your Car Service Team <br>
 P.S. If you have any questions or need to reschedule, please contact us at support@carservice.com.<br>
 
 Unsubscribe here to stop receiving all communications from us. -->
+
+<!-- June 3 -->
+%%[
+    SET @FirstName = Propercase(AttributeValue("First Name"))
+    SET @date = AttributeValue("LastLogin")
+    SET @today = Now()
+    SET @month = FormatDate(@today, "MMMM")
+    SET @genre = Propercase(AttributeValue("MostPlayedGenre"))
+    SET @newGenre = AttributeValue("NewGenrePlaylistID")
+    SET @url = Concat("www.musicmadeforyou.com/", @newGenre)
+    SET @hoursSpent = AttributeValue("HoursSpent")
+    SET @musicHours = FormatNumber(@hoursSpent, "N1")
+]%%
+
+
+
+Hi %%=v(@FirstName)=%%,<br>
+We hope you're enjoying your time with us this %%=v(@month)=%%! <br>
+Seems like you've been grooving to a lot of %%=v(@genre)=%%, <br>
+spending a total of %%=v(@musicHours)=%% minutes listening. That’s amazing!<br> 
+We want to let you know that we have curated a new playlist just for %%=v(@genre)=%% lovers like you.<br> 
+You can check it out here: <a href="%%=v(@url)=%%">%%=v(@url)=%%</a>.

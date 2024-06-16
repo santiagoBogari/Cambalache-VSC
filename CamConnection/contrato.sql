@@ -138,7 +138,7 @@ WHERE CombinedEmails.EmailAddress IS NOT NULL
 ) AS RankedEmails
 WHERE RowNum = 1
 
-/* DE Results emails unicos Contrato */
+/* DE Results emails unicos Contrato (798 rows)*/
 
 /*  */
 
