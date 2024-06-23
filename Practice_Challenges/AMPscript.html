@@ -364,3 +364,76 @@ Seems like you've been grooving to a lot of %%=v(@genre)=%%, <br>
 spending a total of %%=v(@musicHours)=%% minutes listening. That’s amazing!<br> 
 We want to let you know that we have curated a new playlist just for %%=v(@genre)=%% lovers like you.<br> 
 You can check it out here: <a href="%%=v(@url)=%%">%%=v(@url)=%%</a>.
+
+<!-- SB ampscript june2 -->
+%%[
+SET @FirstName = Propercase(AttributeValue("First Name"))
+SET @CarMake = Uppercase(AttributeValue("CarMake"))
+SET @CarModel = AttributeValue("CarModel")
+SET @rego = AttributeValue("rego")
+SET @regDate = AttributeValue("RegistrationDate")
+SET @regDateFormated = FormatDate(@regDate, "dd/MM/yyyy")
+SET @color = AttributeValue("CarColor")
+SET @today = Now()
+SET @scheduledClass = DateAdd(@today, 14, "D")
+SET @formatDate = FormatDate(@scheduledClass, "MMMM d, yyyy")
+]%%
+
+
+
+
+
+
+
+Hello %%=v(@FirstName)=%%, <br>
+
+We are writing to inform you of an important recall for your  %%=v(@CarMake)=%% %%=v(@CarModel)=%%. According to our records, your vehicle with the rego number %%=v(@rego)=%%, registered on %%=v(@regDateFormated)=%%, needs to be brought in for a service repair. <br>
+
+Please return your %%=v(@CarMake)=%% %%=v(@CarModel)=%% %%=v(@color)=%% by %%=v(@formatDate)=%% to ensure your vehicle is safe to drive. <br>
+
+We apologize for any inconvenience this may cause and appreciate your prompt attention to this matter. <br>
+
+Best regards, <br>
+
+Your Car Service Team <br>
+
+P.S. If you have any questions or need to reschedule, please contact us at support@carservice.com.<br>
+
+Unsubscribe here to stop receiving all communications from us.
+
+<!-- June 4 (23/6)  -->
+
+%%[
+SET @FirstName = Propercase(AttributeValue("First Name"))
+SET @Dprogram = Propercase(AttributeValue("DegreeProgram"))
+SET @UppDprogram = Uppercase(@Dprogram)
+SET @Courses = Uppercase(AttributeValue("Courses"))
+SET @today = Now()
+SET @WorkshopDate = FormatDate(DateAdd(@today, 7, "D"), "MMMM d, yyyy")
+SET @GuestLecture  = FormatDate(DateAdd(@today, 14, "D"), "MMMM d, yyyy")
+SET @CDay = FormatDate(@today, "dd ddddd")
+SET @CMonth = Uppercase(FormatDate(@today, "MMMM"))
+]%%
+
+
+
+Hello %%=v(@FirstName)=%%, <br>
+
+We are excited to share the latest news and updates for your Bachelor of %%=v(@Dprogram)=%% program. Here are some highlights and upcoming events tailored just for you: 
+<br>
+### Your Courses: <br>
+%%=v(@Courses)=%%
+<br><br>
+### Upcoming Events: <br>
+- **Workshop: Advanced Topics in %%=v(@UppDprogram)=%%** on %%=v(@WorkshopDate)=%%<br>
+- **Guest Lecture:  %%=v(@Dprogram)=%% Innovations** on %%=v(@GuestLecture)=%%. 
+<br><br>
+These events are designed to enhance your learning experience and provide you with additional resources and insights from experts in your field. 
+<br><br>
+We hope you find these events informative and engaging. Stay tuned for more updates and resources to support your studies. 
+<br><br>
+Best regards, <br>
+Your University Team
+
+<br>
+Subject: It’s your %%=v(@CDay)=%%, %%=v(@CMonth)=%% Monthly Newsletter: Updates for Your Bachelor of %%=v(@Dprogram)=%% Program
