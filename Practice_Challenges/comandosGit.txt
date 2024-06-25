@@ -1,0 +1,91 @@
+
+sfdx force source manifest create --fromorg [your org alias] --manifestname=allMetadata --outputdir manifest
+
+validacion:
+sfdx force:source:deploy -x manifest\<package xml> --targetusername <sandbox_alias> --testlevel RunSpecifiedTests -r <Testclasses> --checkonly
+
+Este comando lo uso para validar contra devMilho, parada en release/one con el packageMilho2.xml
+sf project deploy validate --target-org devMilho --manifest manifest\packageMilho2.xml --test-level RunLocalTests --verbose
+
+Este comando lo uso si quiero correr solamente las clases de test incluidas en el paquete
+sfdx force:source:deploy -x manifest\packageMilho.xml --targetusername devMilho --testlevel RunSpecifiedTests -r testclass1,testclass2 --checkonly
+
+crear un manifest xml con la metadata de un proyecto ya existente en vsc
+sfdx force source manifest create --sourcepath force-app/main/default --outputdir manifest
+
+abrir la org para ver los resultado de la validacion
+sfdx force:org:open -u <myorg> -p "/_ui/reports/ReportList/list?fcf=00BXXXXXXXXXXXX" 
+
+
+git reset --soft HEAD~1     (eliminar ultimo commit en repo local)
+
+git checkout -b version-python   (Switched to a new branch 'version-python')
+
+git branch -m version-js  (cambiar nombre de la misma rama)
+
+git branch -m version-python version-py (cambiar nombre desde otra rama)
+
+git branch -d version-py   (borrar una rama, ojo: desde otra rama)
+git branch -D develop  (borrar una rama, ojo: desde otra rama)
+
+git switch -c develop (crear y moverse a esa nueva rama)
+ 
+git log --oneline
+
+git log -p
+
+git show eebf183 (ver que cambios hay en un commit con su hash)
+
+git merge version-js
+
+git merge --continue
+
+git fetch origin
+
+git checkout origin/main (muestra en vsc los cambios en origin sin modificar el local)
+
+git checkout main
+
+git remote add origin https://github.com/santiagoBogari/proyecto-js.git (enviar repo desde local)
+
+git branch -a
+
+git push origin -d mensaje-freeCode
+
+git diff --git a/index.html b/index.html      (diferencias)
+
+git stash
+git stash --include-untracked
+
+git show
+git log
+
+
+git checkout example.txt (borra el ultimo cambio en el area de trabajo)
+git revert eebf183 
+____
+Para pasar por alto un directorio completo, debe incluir el nombre del directorio con la barra diagonal / al final.
+
+Abra el archivo .gitignore, quite el nombre de archivo de la ruta de acceso y deje la carpeta con una barra diagonal, por ejemplo, .vscode/*.
+___
+git branch feature-devops-home-page
+git checkout feature-devops-home-page
+git branch --list
+
+____________________________________________________________
+fatal: unable to access 'https://dev.azure.com/santiagobogari/FirstProject/_git/SimpleRepo1/': Unsupported proxy syntax in 'proxy.server.com:port'  
+
+https://github.com/orgs/community/discussions/52636
+
+git config --global --get http.proxy
+
+git config --global --unset http.proxy
+___________________________________________________________
+
+* MERGE *
+parado en la rama que queremos que reciba los cambios (ej. MAIN)
+ejecutamos comando 'merge' con el nombre de la rama que contiene los cambios
+
+____________________________________________
+
+git fetch (desde vsc traigo la nueva rama development desde origin)
