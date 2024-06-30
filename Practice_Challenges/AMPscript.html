@@ -437,3 +437,19 @@ Your University Team
 
 <br>
 Subject: It’s your %%=v(@CDay)=%%, %%=v(@CMonth)=%% Monthly Newsletter: Updates for Your Bachelor of %%=v(@Dprogram)=%% Program
+
+<!-- ampscript june 5  30/6-->
+
+%%[
+SET @FirstName = Propercase(AttributeValue("First Name"))
+SET @userID = AttributeValue("UserID")
+SET @refCode = Concat(@userID,"JOIN")
+SET @upcCode = Uppercase(@refCode)
+SET @today = Now()
+SET @month = FormatDate(@today,"MMM")
+SET @refLink = Concat("skillprofriends.com/",@month,@upcCode)
+
+SET @msg = Concat("Hello ",@FirstName,",<br>Thank you for being one of our most engaged users!<br>As a token of our appreciation, we're inviting you to refer at least three friends using your unique referral link<br><br> Referral Link = <a href='",@refLink,"'>",@refLink,"</a>.<br><br> Once your referrals join, you'll receive exclusive one-on-one access to our top coach to help develop your career and skill sets.<br> Thank you for your support! <br><br>Reply back STOP to opt out of all SMS marketing messages.")
+]%%
+
+%%=v(@msg)=%%
