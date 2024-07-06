@@ -4,7 +4,7 @@ SELECT DNI, Email, Nombre, Apellido, Telefono
 
 FROM Cliente
 
-/*  92887 rows  */
+/*  106812 rows */
 
 
 /*  */

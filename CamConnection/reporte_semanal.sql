@@ -112,3 +112,181 @@ GROUP BY
 
 /*  */
 
+<script runat="server">
+Platform.Load("core", "1");
+// aqui configuras las variables
+var resultsDE = DataExtension.Init("ClickMetrics");
+var queryDefinition = QueryDefinition.Init("Your_SQL_Query_Name");
+// Ejecucion de la query
+try {
+    queryDefinition.Start();
+    Write("Query ejecutada correctamente.");
+} catch (e) {
+    Write("Error al ejecutar la consulta: " + Stringify(e));
+}
+// wait de la query
+var queryStatus = queryDefinition.Status;
+while (queryStatus != "Completed") {
+    queryStatus = queryDefinition.Status;
+    Platform.Response.Write("Esperando que la consulta finalice...<br>");
+    Platform.Function.Sleep(5000); // Esperar 5 segundos antes de volver a comprobar
+}
+// captación de datos de la DE
+var reportRows = resultsDE.Rows.Retrieve();
+var emailContent = "<h1>Click Report</h1><table><tr><th>Email Name</th><th>Link Name</th><th>Total Clicks</th><th>Click Rate</th></tr>";
+for (var i = 0; i < reportRows.length; i++) {
+    emailContent += "<tr><td>" + reportRows[i].EmailName + "</td><td>" + reportRows[i].LinkName + "</td><td>" + reportRows[i].TotalClicks + "</td><td>" + reportRows[i].ClickRate + "%</td></tr>";
+}
+emailContent += "</table>";
+// si se va a configurar y enviar un correo electrónico con la info
+var email = {
+    "To": "your-email@example.com",
+    "From": "noreply@example.com",
+    "Subject": "Weekly Click Report",
+    "HTMLBody": emailContent
+};
+try {
+    Platform.Function.SendEmail(email);
+    Write("Email enviado correctamente.");
+} catch (e) {
+    Write("Error al enviar el email: " + Stringify(e));
+}
+</script>
+
+/*  */
+SELECT  acc.Name as Name,
+        _Job.EmailName,
+        _Subscribers.EmailAddress AS SubscriberEmail,
+        _Open.EventDate AS OpenEventDate,
+        _Click.EventDate AS ClickEventDate,
+        _Click.URL,
+        _Click.LinkName,
+        _Click.LinkContent,
+        _Subscribers.DateJoined,
+        _Subscribers.Status AS SubscribersStatus,
+        _Job.FromName,
+        _Job.FromEmail,
+        _Job.SchedTime,
+        _Job.ModifiedDate,
+        _Job.EmailSubject,
+        _Job.Category,
+        _Job.CreatedDate AS JobCreatedDate,
+        _Job.SendClassificationType,
+        _JourneyActivity.ActivityName,
+        _JourneyActivity.ActivityType,
+        _Journey.JourneyName,
+        _Journey.VersionNumber,
+        _Journey.CreatedDate AS JourneyCreatedDate,
+        _Journey.LastPublishedDate,
+        _Journey.JourneyStatus
+FROM _Open
+LEFT JOIN _Click 
+        ON _Open.JobID = _Click.JobID 
+        AND _Open.ListID = _Click.ListID 
+        AND _Open.BatchID = _Click.BatchID 
+        AND _Open.SubscriberID = _Click.SubscriberID 
+        AND _Click.IsUnique = 1
+LEFT JOIN _Subscribers 
+        ON _Open.SubscriberID = _Subscribers.SubscriberID
+LEFT JOIN _Job 
+        ON _Open.JobID = _Job.JobID
+LEFT JOIN _JourneyActivity 
+        ON _Open.TriggererSendDefinitionObjectID = _JourneyActivity.JourneyActivityObjectID
+LEFT JOIN _Journey 
+        ON _JourneyActivity.VersionID = _Journey.VersionID
+LEFT JOIN   Emails_Account_Contact_Lead as Acc
+        ON Acc.Email = _Subscribers.EmailAddress
+WHERE _Click.EventDate IS NOT NULL AND _Click.EventDate >= DATEADD(day, -90, GETDATE())
+
+/* (208 rows) */
+
+SELECT  acc.Name as Name,
+        _Job.EmailName,
+        _Subscribers.EmailAddress AS SubscriberEmail,
+        _Open.EventDate AS OpenEventDate,
+        _Click.EventDate AS ClickEventDate,
+        _Click.URL,
+        _Click.LinkName,
+        _Click.LinkContent,
+        _Subscribers.DateJoined,
+        _Subscribers.Status AS SubscribersStatus,
+        _Job.FromName,
+        _Job.FromEmail,
+        _Job.SchedTime,
+        _Job.ModifiedDate,
+        _Job.EmailSubject,
+        _Job.Category,
+        _Job.CreatedDate AS JobCreatedDate,
+        _Job.SendClassificationType,
+        _JourneyActivity.ActivityName,
+        _JourneyActivity.ActivityType,
+        _Journey.JourneyName,
+        _Journey.VersionNumber,
+        _Journey.CreatedDate AS JourneyCreatedDate,
+        _Journey.LastPublishedDate,
+        _Journey.JourneyStatus
+FROM _Open
+LEFT JOIN _Click 
+        ON _Open.JobID = _Click.JobID 
+        AND _Open.ListID = _Click.ListID 
+        AND _Open.BatchID = _Click.BatchID 
+        AND _Open.SubscriberID = _Click.SubscriberID 
+        AND _Click.IsUnique = 1
+LEFT JOIN _Subscribers 
+        ON _Open.SubscriberID = _Subscribers.SubscriberID
+LEFT JOIN _Job 
+        ON _Open.JobID = _Job.JobID
+LEFT JOIN _JourneyActivity 
+        ON _Open.TriggererSendDefinitionObjectID = _JourneyActivity.JourneyActivityObjectID
+LEFT JOIN _Journey 
+        ON _JourneyActivity.VersionID = _Journey.VersionID
+LEFT JOIN   Emails_Account_Contact_Lead as Acc
+        ON Acc.Email = _Subscribers.EmailAddress
+WHERE _Click.EventDate IS NOT NULL
+
+/*  */
+SELECT DISTINCT
+acc.Name as Name,
+        _Job.EmailName,
+        _Subscribers.EmailAddress AS SubscriberEmail,
+        _Open.EventDate AS OpenEventDate,
+        _Click.EventDate AS ClickEventDate,
+        _Click.URL,
+        _Click.LinkName,
+        _Click.LinkContent,
+        _Subscribers.DateJoined,
+        _Subscribers.Status AS SubscribersStatus,
+        _Job.FromName,
+        _Job.FromEmail,
+        _Job.SchedTime,
+        _Job.ModifiedDate,
+        _Job.EmailSubject,
+        _Job.Category,
+        _Job.CreatedDate AS JobCreatedDate,
+        _Job.SendClassificationType,
+        _JourneyActivity.ActivityName,
+        _JourneyActivity.ActivityType,
+        _Journey.JourneyName,
+        _Journey.VersionNumber,
+        _Journey.CreatedDate AS JourneyCreatedDate,
+        _Journey.LastPublishedDate,
+        _Journey.JourneyStatus
+FROM _Open
+LEFT JOIN _Click 
+        ON _Open.JobID = _Click.JobID 
+        AND _Open.ListID = _Click.ListID 
+        AND _Open.BatchID = _Click.BatchID 
+        AND _Open.SubscriberID = _Click.SubscriberID 
+        AND _Click.IsUnique = 1
+LEFT JOIN _Subscribers 
+        ON _Open.SubscriberID = _Subscribers.SubscriberID
+LEFT JOIN _Job 
+        ON _Open.JobID = _Job.JobID
+LEFT JOIN _JourneyActivity 
+        ON _Open.TriggererSendDefinitionObjectID = _JourneyActivity.JourneyActivityObjectID
+LEFT JOIN _Journey 
+        ON _JourneyActivity.VersionID = _Journey.VersionID
+LEFT JOIN   Emails_Account_Contact_Lead as Acc
+        ON Acc.Email = _Subscribers.EmailAddress
+WHERE _Open.EventDate IS NOT NULL
+/* 752  DE Emails con clicks reporte */
