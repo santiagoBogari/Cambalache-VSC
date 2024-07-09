@@ -436,7 +436,7 @@ Best regards, <br>
 Your University Team
 
 <br>
-Subject: It’s your %%=v(@CDay)=%%, %%=v(@CMonth)=%% Monthly Newsletter: Updates for Your Bachelor of %%=v(@Dprogram)=%% Program
+Subject: It's your %%=v(@CDay)=%%, %%=v(@CMonth)=%% Monthly Newsletter: Updates for Your Bachelor of %%=v(@Dprogram)=%% Program
 
 <!-- ampscript june 5  30/6-->
 
@@ -458,19 +458,31 @@ SET @msg = Concat("Hello ",@FirstName,",<br>Thank you for being one of our most 
 
 Subject:Welcome %%=ProperCase(First_Name)=%%
 
-<!-- Maxim -->
 
-Email Activity: ECOM_confirmacion_pedido_202407 -- The email specified for the job did not pass validation. EmailID: 5654 Personalization error: %%order:cantidad__c%% To fix the problem, please try the following: Make sure that there is not a space or typo within the personalization string in your email. For example, check and correct any spaces between percent signs (%%) Correct the HTML Body of your email. Personalization error: %%order:cantidad__c%% To fix the problem, please try the followin
-German Emens
-15:30
-Número de Pedido:%%Order:Ref_ETX2__c%%
-Producto(s): %%Order:Order_Product__r:Descripcion__c%%
-Cantidad Total: %%Order:Order_Product__r:Quantity%%
-Total: Order: %%Cantidad_de_orden_bruto__c%%
 
-Método de entrega: %%Order:Meodo_de_Envio_Retiro__c%%
-Dirección de Envío/Retiro: %%Order:ShippingStreet%%, %%Order:ShippingCity%%, %%Order:ShippingPostalCode%%, %%Order:ShippingState%%
-Hola, %%Order:Account:FirstName%%
+<!-- july 1 -->
 
-Order:Id
+%%[
+SET @FirstName = Propercase(AttributeValue("FirstName"))
+SET @userID = AttributeValue("UserID")
+SET @AccountNumber = [AccountNumber]
+SET @NegativeBalance = [NegativeBalance]
+SET @LastWithdrawnDate = [LastWithdrawnDate]
+SET @FormattedAccountNumber = Concat("XXXXXXXX", Substring(@AccountNumber, 9, 4))
 
+IF DATEDIFF(NOW(), @LastWithdrawnDate, "d") > 30 THEN
+  SET @Message = "Immediate attention required! Please deposit funds immediately to avoid significant fees."
+ELSEIF @NegativeBalance >= 100 AND @NegativeBalance <= 200 THEN
+  SET @Message = "Your account needs attention. Please deposit funds soon to avoid any fees."
+ELSE
+  SET @Message = "Please deposit funds at your earliest convenience to avoid any fees."
+ENDIF
+
+SET @FormattedNegativeBalance = Concat("-$", Format(@NegativeBalance, "0.00"))
+
+]%%
+
+Hello %%=v(@FirstName)=%%,<br> Your SafeBank account ending in %%=v(@FormattedAccountNumber)=%% <br> is currently overdrawn by %%=v(@FormattedNegativeBalance)=%%.<br>
+%%=v(@Message)=%% <br><br>
+
+Reply back STOP to opt out.
