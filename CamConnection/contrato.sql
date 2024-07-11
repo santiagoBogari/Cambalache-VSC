@@ -166,3 +166,6 @@ WHERE AC.email__c IS NOT NULL or co.Email_Contacto_Tecnico__c IS NOT NULL
 or co.Email_Contacto_Comercial__c IS NOT NULL
 
 /*  (1800 rows)  */
+
+/*  */
+
