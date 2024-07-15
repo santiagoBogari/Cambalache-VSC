@@ -130,3 +130,17 @@ HAVING
     MIN(CASE WHEN CTR.Status = 'Expired' THEN 1 ELSE 0 END) = 1
 
     /* (59 rows) */
+
+
+    /*  */
+    SELECT Id, Name, email__c, Tiene_contrato_activo__c, ShippingCountry
+
+FROM SFImport_Accounts_2
+
+WHERE Tiene_contrato_activo__c = 'False' AND (ShippingCountry = 'México' OR ShippingCountry = 'Mexico')
+
+/* (453 rows) */
+
+
+
+001F000000txrKMIAY

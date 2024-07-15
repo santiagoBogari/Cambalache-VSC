@@ -15,3 +15,137 @@ Hola, %%Order:Account:FirstName%%
 
 Order:Id
  
+<!-- AMPscript code GER 5 jul 2024-->
+
+Por una lado esta este codigo que se coloca en el header:
+
+%%[
+/* Obtener las filas de productos relacionadas con la orden */
+SET @OrderRows = LookupRows("OrderProductDE", "OrderId", [Order:Id])
+
+/* Definir las variables de la orden */
+SET @OrderId = [Order:Id]
+SET @FirstName = [Order:Account:FirstName]
+SET @RefETX2 = [Order:Ref_ETX2__c]
+SET @CantidadOrdenBruto = [Cantidad_de_orden_bruto__c]
+SET @MetodoEnvioRetiro = [Order:Meodo_de_Envio_Retiro__c]
+SET @ShippingStreet = [Order:ShippingStreet]
+SET @ShippingCity = [Order:ShippingCity]
+SET @ShippingPostalCode = [Order:ShippingPostalCode]
+SET @ShippingState = [Order:ShippingState]
+
+]%%
+
+<p>Order ID: %%=v(@OrderId)=%%</p>
+<p>First Name: %%=v(@FirstName)=%%</p>
+<p>Reference: %%=v(@RefETX2)=%%</p>
+<p>Order Gross Amount: %%=v(@CantidadOrdenBruto)=%%</p>
+<p>Shipping Method: %%=v(@MetodoEnvioRetiro)=%%</p>
+<p>Shipping Address: %%=v(@ShippingStreet)=%%, %%=v(@ShippingCity)=%%, %%=v(@ShippingPostalCode)=%%, %%=v(@ShippingState)=%%</p>
+
+%%[
+
+/* Verificar si hay productos asociados con la orden */
+IF RowCount(@OrderRows) > 0 THEN
+
+    /* Bucle a través de cada producto de la orden */
+    FOR @i = 1 TO RowCount(@OrderRows) DO
+
+        /* Obtener la fila del producto actual */
+        SET @OrderRow = Row(@OrderRows, @i)
+        SET @Descripcion = Field(@OrderRow, "Descripcion__c")
+        SET @Quantity = Field(@OrderRow, "Quantity")
+
+]%%
+
+<p>Product Description: %%=v(@Descripcion)=%%</p>
+<p>Quantity: %%=v(@Quantity)=%%</p>
+
+%%[
+
+    NEXT @i
+
+ENDIF
+
+]%%
+
+Mostrar productos:
+
+Esto en el HTML
+
+<p>Product Description: %%=v(@Descripcion)=%%</p>
+<p>Quantity: %%=v(@Quantity)=%%</p>
+
+Variables:
+
+Order ID: %%=v(@OrderId)=%%
+First Name: %%=v(@FirstName)=%%
+Reference: %%=v(@RefETX2)=%%
+Product Description: %%=v(@Descripcion)=%%
+Quantity: %%=v(@Quantity)=%%
+Order Gross Amount: %%=v(@CantidadOrdenBruto)=%%
+Shipping Method: %%=v(@MetodoEnvioRetiro)=%%
+Shipping Address: %%=v(@ShippingStreet)=%%, %%=v(@ShippingCity)=%%, %%=v(@ShippingPostalCode)=%%, %%=v(@ShippingState)=%%  
+
+<!--  -->
+%%[
+SET @OrderId = [Id]
+SET @OrderRows = LookupRows("OrderProductDE", "OrderId", @OrderId)
+
+
+SET @FirstName = [FirstName]
+SET @RefETX2 = [Ref_ETX2__c]
+SET @CantidadOrdenBruto = [Cantidad_de_orden_bruto__c]
+SET @MetodoEnvioRetiro = [Meodo_de_Envio_Retiro__c]
+SET @ShippingStreet = [ShippingStreet]
+SET @ShippingCity = [ShippingCity]
+SET @ShippingPostalCode = [ShippingPostalCode]
+SET @ShippingState = [ShippingState]
+]%%
+
+<p>Order ID: %%=v(@OrderId)=%%</p>
+<p>First Name: %%=v(@FirstName)=%%</p>
+<p>Reference: %%=v(@RefETX2)=%%</p>
+<p>Order Gross Amount: %%=v(@CantidadOrdenBruto)=%%</p>
+<p>Shipping Method: %%=v(@MetodoEnvioRetiro)=%%</p>
+<p>Shipping Address: %%=v(@ShippingStreet)=%%, %%=v(@ShippingCity)=%%, %%=v(@ShippingPostalCode)=%%,
+    %%=v(@ShippingState)=%%</p>
+<br><br>
+%%[
+
+/* Verificar si hay productos asociados con la orden */
+IF RowCount(@OrderRows) > 0 THEN
+
+/* Bucle a través de cada producto de la orden */
+FOR @i = 1 TO RowCount(@OrderRows) DO
+
+/* Obtener la fila del producto actual */
+SET @OrderRow = Row(@OrderRows, @i)
+SET @Descripcion = Field(@OrderRow, "Descripcion__c")
+SET @Quantity = Field(@OrderRow, "Quantity")
+
+]%%
+
+<p>Product Description: %%=v(@Descripcion)=%%</p>
+<p>Quantity: %%=v(@Quantity)=%%</p>
+
+%%[
+
+NEXT @i
+
+ENDIF
+
+]%%
+
+
+Variables:
+
+Order ID: %%=v(@OrderId)=%%
+First Name: %%=v(@FirstName)=%%
+Reference: %%=v(@RefETX2)=%%
+Product Description: %%=v(@Descripcion)=%%
+Quantity: %%=v(@Quantity)=%%
+Order Gross Amount: %%=v(@CantidadOrdenBruto)=%%
+Shipping Method: %%=v(@MetodoEnvioRetiro)=%%
+Shipping Address: %%=v(@ShippingStreet)=%%, %%=v(@ShippingCity)=%%, %%=v(@ShippingPostalCode)=%%,
+%%=v(@ShippingState)=%%

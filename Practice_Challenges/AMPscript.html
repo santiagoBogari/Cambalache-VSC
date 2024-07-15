@@ -486,3 +486,38 @@ Hello %%=v(@FirstName)=%%,<br> Your SafeBank account ending in %%=v(@FormattedAc
 %%=v(@Message)=%% <br><br>
 
 Reply back STOP to opt out.
+
+<!-- July 1 Vince -->
+%%[
+SET @fName = [FirstName]
+SET @accountNum = [AccountNumber]
+SET @negativeBal = [NegativeBalance]
+SET @trimFname = TRIM(@fName)
+SET @properfName = PROPERCASE(@trimFname)
+SET @lengthAcct = Length(@accountNum)
+SET @fourDigit = substring(@accountNum,subtract(@lengthAcct,3))
+SET @negBalance = CONCAT("-",FORMAT(@negativeBal,"c"))
+]%%
+Hello %%=v(@properfName)=%%,<br> Your SafeBank account ending in %%=v(@fourDigit)=%% <br> is currently overdrawn by %%=v(@negBalance)=%%.<br>
+%%=v(@Message)=%% <br><br>
+
+<!-- July 2 Vince -->
+%%[
+/* Retrieve customer and agent details from the data extension */
+SET @UserID = [UserID]
+SET @FirstName = Propercase(Trim([FirstName]))
+SET @Suburb = Propercase(Trim([Suburb]))
+SET @AgentName = Propercase(Trim([AgentName]))
+SET @AgentMobile = Format(Trim([AgentMobile]), "0### ### ###")
+]%%
+
+Hello %%=v(@FirstName)=%%,
+
+Thank you for visiting our open house in %%=v(@Suburb)=%%. Are you still interested in buying a property in this area? For more information and insights on upcoming open houses, please contact %%=v(@AgentName)=%% at %%=v(@AgentMobile)=%%.
+
+
+
+Reply STOP to 0410456890 to opt out of messages. 
+
+ <!--  -->
+ 

@@ -289,4 +289,4 @@ LEFT JOIN _Journey
 LEFT JOIN   Emails_Account_Contact_Lead as Acc
         ON Acc.Email = _Subscribers.EmailAddress
 WHERE _Open.EventDate IS NOT NULL
-/* 752  DE Emails con clicks reporte */
+/* 752  DE Emails con clicks reporte */ 

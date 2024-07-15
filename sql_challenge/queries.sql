@@ -124,3 +124,28 @@ SELECT
     LEFT JOIN _Journey AS j ON j.VersionID = ja.VersionID
 WHERE
     s.EventDate >= DATEADD(DAY, -1, GETDATE())
+
+    /*  */
+
+SELECT bd.Account_Id,
+       bd.Flag_Sellos,
+       au.Fecha_ultima_Compra_GO,
+       au.First_Name,
+       au.Last_Name,
+       au.Email,
+       au.Phone_Number,
+       au.Locate,
+       au.City,
+       CASE 
+          WHEN bd.Flag_Sellos >= 3 THEN 'True' 
+          ELSE 'False' 
+       END AS Sello_Finalizado
+FROM (
+  SELECT bd.MC_AccountId AS Account_Id,
+         COUNT(CASE WHEN bd.Rango_Ticket = '$300+' AND CAST(bd.fecha_orden_mioxxo AS DATE) >= '2024-07-01' THEN 1 ELSE NULL END) AS Flag_Sellos
+  FROM Base_Barracuda_Importacion bd
+  GROUP BY bd.MC_AccountId
+) bd
+
+ /* subquery con un count de pedidos +300 pesosy en la otra query preguntas 
+ si tiene al menos 3 de esos pedidos le pones true en un campo */
