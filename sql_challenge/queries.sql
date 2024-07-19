@@ -149,3 +149,8 @@ FROM (
 
  /* subquery con un count de pedidos +300 pesosy en la otra query preguntas 
  si tiene al menos 3 de esos pedidos le pones true en un campo */
+
+ /*  */
+ CAST(st.ActionDateTime AS Date) >= '2023-07-13'
+
+ CAST(EndDate AS Date)  > 'Jan 1 2020' 

@@ -167,5 +167,29 @@ or co.Email_Contacto_Comercial__c IS NOT NULL
 
 /*  (1800 rows)  */
 
-/*  */
+/* con campo Tiene_contrato_activo__c */
+SELECT  
+co.Id as ContratoId, 
+AC.Name as AccountName,
+AC.Tiene_contrato_activo__c as Tiene_contrato_activo,
+co.AccountId as AccountId,
+AC.email__c as AccountEmail,
+co.Email_Contacto_Tecnico__c as Email_Contacto_Tecnico,
+co.Email_Contacto_Comercial__c as Email_Contacto_Comercial,
+co.StartDate, co.EndDate, 
+co.BillingCountry,
+co.ShippingCountry,
+co.OwnerId, co.Status,
+co.StatusCode,
+co.CreatedDate, co.CreatedById, co.LastModifiedDate,
+co.LastModifiedById,
+co.Fecha_Fin_Contrato__c,
+co.Sub_Brand__c,
+co.Territorio__c, co.Pais__c, co.Dias_para_vencer__c, AC.Fecha_proximo_vencimiento_contrato__c
 
+FROM SFImport_Contrato as co
+LEFT JOIN SFImport_Accounts_2 as AC on co.AccountId = AC.Id
+WHERE AC.email__c IS NOT NULL or co.Email_Contacto_Tecnico__c IS NOT NULL 
+or co.Email_Contacto_Comercial__c IS NOT NULL
+
+/* (1854 rows) */
