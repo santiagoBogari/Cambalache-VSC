@@ -193,3 +193,27 @@ WHERE AC.email__c IS NOT NULL or co.Email_Contacto_Tecnico__c IS NOT NULL
 or co.Email_Contacto_Comercial__c IS NOT NULL
 
 /* (1854 rows) */
+
+/*  */
+SELECT TOP 3000
+co.Id as ContratoId, 
+AC.Name as AccountName,
+AC.Tiene_contrato_activo__c as Tiene_contrato_activo,
+co.AccountId as AccountId,
+AC.email__c as AccountEmail,
+co.Email_Contacto_Tecnico__c as Email_Contacto_Tecnico,
+co.Email_Contacto_Comercial__c as Email_Contacto_Comercial,
+co.StartDate, co.EndDate 
+
+FROM SFImport_Contrato as co
+LEFT JOIN SFImport_Accounts_2 as AC on co.AccountId = AC.Id
+
+GROUP BY 
+co.Id as ContratoId, 
+AC.Name as AccountName,
+AC.Tiene_contrato_activo__c as Tiene_contrato_activo,
+co.AccountId as AccountId,
+AC.email__c as AccountEmail,
+co.Email_Contacto_Tecnico__c as Email_Contacto_Tecnico,
+co.Email_Contacto_Comercial__c as Email_Contacto_Comercial,
+co.StartDate, co.EndDate 

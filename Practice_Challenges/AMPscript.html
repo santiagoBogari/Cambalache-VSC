@@ -16,14 +16,15 @@ Set @dob = FormatDate(AttributeValue("Date_of_Birth"), "MM/dd/yyyy")
 <p>Thank you for registering with us!</p>
 <p> Here are the details we have on file for you:</p>
 <ul>
-<li>Name: %%=v(@fullName)=%%</li>
-<li>Preferences: %%=v(@preferences)=%%</li>
-<li>Phone Number: %%=v(Phone_Number)=%%</li>
-<li>Address: %%=v(@Address)=%%</li>
-<li>Email: %%=v(@Email)=%%</li>
-<li>Date of Birth: %%=v(@dob)=%%</li>
+    <li>Name: %%=v(@fullName)=%%</li>
+    <li>Preferences: %%=v(@preferences)=%%</li>
+    <li>Phone Number: %%=v(Phone_Number)=%%</li>
+    <li>Address: %%=v(@Address)=%%</li>
+    <li>Email: %%=v(@Email)=%%</li>
+    <li>Date of Birth: %%=v(@dob)=%%</li>
 </ul>
-<p> If any of these details are incorrect, please click <a href="%%profile_center_url%%">here</a> to update your information.</p>
+<p> If any of these details are incorrect, please click <a href="%%profile_center_url%%">here</a> to update your
+    information.</p>
 <p>Best regards</p>
 <p>The Team </p>
 
@@ -71,7 +72,10 @@ SET @firstName = AttributeValue("First Name")
 SET @anniversaryDate = AttributeValue("Anniversary Date")
 SET @discountCode = Concat("25OFF", ProperCase(@firstName), FormatDate(@anniversaryDate, "YYYYMMdd"))
 
-SET @message = Concat("Dear ", ProperCase(@firstName), ",\n\nThank you for being a loyal customer for ", AttributeValue("Tenure"), " years. We are delighted to celebrate your anniversary with us!\n\nAs a token of appreciation, please enjoy a unique discount code for your next purchase: ", @discountCode, "\n\nWe look forward to serving you again!\n\nBest regards,\nYour Retail Brand")
+SET @message = Concat("Dear ", ProperCase(@firstName), ",\n\nThank you for being a loyal customer for ",
+AttributeValue("Tenure"), " years. We are delighted to celebrate your anniversary with us!\n\nAs a token of
+appreciation, please enjoy a unique discount code for your next purchase: ", @discountCode, "\n\nWe look forward to
+serving you again!\n\nBest regards,\nYour Retail Brand")
 
 /* Send SMS */
 SET @mobileNumber = AttributeValue("Mobile Number")
@@ -123,7 +127,7 @@ SET @discountCode = CONCAT("200FF",@firstNameUpper,@annFormat)
     </ul>
     <p>Thank you for choosing our services.</p>  -->
 
-    %%[
+%%[
 SET @FirstName = AttributeValue("First Name")
 SET @ProductName = AttributeValue("Product Name")
 SET @Quantity = AttributeValue("Quantity")
@@ -138,9 +142,12 @@ SET @Country = AttributeValue("Country")
 
 Hi %%=v(@FirstName)=%%!<br><br>
 
-📦 Your order of %%=v(@Quantity)=%%x %%=v(@ProductName)=%%, purchased on Purchase Date: %%=v(@PurchaseDate)=%%, has been shipped.
+📦 Your order of %%=v(@Quantity)=%%x %%=v(@ProductName)=%%, purchased on Purchase Date: %%=v(@PurchaseDate)=%%, has been
+shipped.
 
-It is estimated to be delivered in %%=DateDiff(@EstimatedDeliveryDate, Now(), "D")=%% days by %%=v(@EstimatedDeliveryDate)=%% to the following address: %%=v(@StreetName)=%%, %%=v(@City)=%%, %%=v(@Postcode)=%%, %%=v(@State)=%%, %%=v(@Country)=%%.
+It is estimated to be delivered in %%=DateDiff(@EstimatedDeliveryDate, Now(), "D")=%% days by
+%%=v(@EstimatedDeliveryDate)=%% to the following address: %%=v(@StreetName)=%%, %%=v(@City)=%%, %%=v(@Postcode)=%%,
+%%=v(@State)=%%, %%=v(@Country)=%%.
 
 <!--  -->
 
@@ -159,9 +166,11 @@ SET @Country = AttributeValue("Country")
 
 Hi %%=v(@FirstName)=%%!
 
-📦 Your order of %%=v(@Quantity)=%%x %%=v(@ProductName)=%%, purchased on Purchase Date: %%=v(@PurchaseDate)=%%, has been shipped.
+📦 Your order of %%=v(@Quantity)=%%x %%=v(@ProductName)=%%, purchased on Purchase Date: %%=v(@PurchaseDate)=%%, has been
+shipped.
 
-It is estimated to be delivered in <x> days by %%=v(@EstimatedDeliveryDate)=%% to the following address: %%=v(@StreetName)=%%, %%=v(@City)=%%, %%=v(@Postcode)=%%, %%=v(@State)=%%, %%=v(@Country)=%%.</x>
+It is estimated to be delivered in <x> days by %%=v(@EstimatedDeliveryDate)=%% to the following address:
+    %%=v(@StreetName)=%%, %%=v(@City)=%%, %%=v(@Postcode)=%%, %%=v(@State)=%%, %%=v(@Country)=%%.</x>
 
 
 SET @fullAddress = Concat(@EstimatedD, ", ", @City, ", ", @Postcode, ", ",@State, ", ",@Country)
@@ -189,14 +198,14 @@ SET @FormattedNewExpiryDate = FormatDate(@NewExpiryDate, "MMM dd, yyyy")
 
 Hi %%=v(@FirstName)=%%! 🎉
 
-    Your %%=v(@MembershipTier)=%% membership is expiring soon. You have %%=v(@RemainingDays)=%% days left to renew. 
-        Renew by %%=v(@ExpiryDate)=%% to keep your %%=v(@CreditPoints)=%% credit points 
-            and enjoy all the benefits until %%=v(@FormattedNewExpiryDate)=%%. Check your email for renewal details.
-    <br><br>
- To manage your consent, our organisation's mobile number is %%=v(@OrgMobileNumber)=%%
+Your %%=v(@MembershipTier)=%% membership is expiring soon. You have %%=v(@RemainingDays)=%% days left to renew.
+Renew by %%=v(@ExpiryDate)=%% to keep your %%=v(@CreditPoints)=%% credit points
+and enjoy all the benefits until %%=v(@FormattedNewExpiryDate)=%%. Check your email for renewal details.
+<br><br>
+To manage your consent, our organisation's mobile number is %%=v(@OrgMobileNumber)=%%
 
- <!-- week 4 solution : -->
- %%[
+<!-- week 4 solution : -->
+%%[
 
 /* RETRIEVE FIELDS */
 SET @firstName = [First Name]
@@ -263,18 +272,18 @@ Best regards,
 Your Fitness Club Team
  -->
 
- <!-- -------------------------------------------------------------- -->
+<!-- -------------------------------------------------------------- -->
 
- %%[
+%%[
 var @de = DataExtension.Init('SB_email_form_de'),
 var @rows = @de.Rows.Retrieve()
 for @i = 1 to RowCount(@rows) do
-    var @row = Row(@rows, @i);
-    var @modif_date = Field(@row, "Modif_Date");
-    var @new_modif_date = FormatDate(@modif_date, "MM/dd/yyyy");
+var @row = Row(@rows, @i);
+var @modif_date = Field(@row, "Modif_Date");
+var @new_modif_date = FormatDate(@modif_date, "MM/dd/yyyy");
 
-    // Update the Modif_Date field in the Data Extension
-    @de.Rows.Update(@row, {"Modif_Date": @new_modif_date});
+// Update the Modif_Date field in the Data Extension
+@de.Rows.Update(@row, {"Modif_Date": @new_modif_date});
 next @i
 ]%%
 
@@ -308,7 +317,7 @@ ENDIF]%%
 <br><br>
 
 If you have any questions, reply to this email or contact us at hello@nexttelecom.com
-Best regards,Next TelecomCrafted with 💜 by AMPscript30.AMPScripted Smiles Ltd.456 
+Best regards,Next TelecomCrafted with 💜 by AMPscript30.AMPScripted Smiles Ltd.456
 Data Extension Drive Suite 321, Loop City,Variable Valley, DE 12345
 
 <!-- June - week 2 -->
@@ -345,15 +354,15 @@ Unsubscribe here to stop receiving all communications from us. -->
 
 <!-- June 3 -->
 %%[
-    SET @FirstName = Propercase(AttributeValue("First Name"))
-    SET @date = AttributeValue("LastLogin")
-    SET @today = Now()
-    SET @month = FormatDate(@today, "MMMM")
-    SET @genre = Propercase(AttributeValue("MostPlayedGenre"))
-    SET @newGenre = AttributeValue("NewGenrePlaylistID")
-    SET @url = Concat("www.musicmadeforyou.com/", @newGenre)
-    SET @hoursSpent = AttributeValue("HoursSpent")
-    SET @musicHours = FormatNumber(@hoursSpent, "N1")
+SET @FirstName = Propercase(AttributeValue("First Name"))
+SET @date = AttributeValue("LastLogin")
+SET @today = Now()
+SET @month = FormatDate(@today, "MMMM")
+SET @genre = Propercase(AttributeValue("MostPlayedGenre"))
+SET @newGenre = AttributeValue("NewGenrePlaylistID")
+SET @url = Concat("www.musicmadeforyou.com/", @newGenre)
+SET @hoursSpent = AttributeValue("HoursSpent")
+SET @musicHours = FormatNumber(@hoursSpent, "N1")
 ]%%
 
 
@@ -361,8 +370,8 @@ Unsubscribe here to stop receiving all communications from us. -->
 Hi %%=v(@FirstName)=%%,<br>
 We hope you're enjoying your time with us this %%=v(@month)=%%! <br>
 Seems like you've been grooving to a lot of %%=v(@genre)=%%, <br>
-spending a total of %%=v(@musicHours)=%% minutes listening. That’s amazing!<br> 
-We want to let you know that we have curated a new playlist just for %%=v(@genre)=%% lovers like you.<br> 
+spending a total of %%=v(@musicHours)=%% minutes listening. That’s amazing!<br>
+We want to let you know that we have curated a new playlist just for %%=v(@genre)=%% lovers like you.<br>
 You can check it out here: <a href="%%=v(@url)=%%">%%=v(@url)=%%</a>.
 
 <!-- SB ampscript june2 -->
@@ -387,9 +396,12 @@ SET @formatDate = FormatDate(@scheduledClass, "MMMM d, yyyy")
 
 Hello %%=v(@FirstName)=%%, <br>
 
-We are writing to inform you of an important recall for your  %%=v(@CarMake)=%% %%=v(@CarModel)=%%. According to our records, your vehicle with the rego number %%=v(@rego)=%%, registered on %%=v(@regDateFormated)=%%, needs to be brought in for a service repair. <br>
+We are writing to inform you of an important recall for your %%=v(@CarMake)=%% %%=v(@CarModel)=%%. According to our
+records, your vehicle with the rego number %%=v(@rego)=%%, registered on %%=v(@regDateFormated)=%%, needs to be brought
+in for a service repair. <br>
 
-Please return your %%=v(@CarMake)=%% %%=v(@CarModel)=%% %%=v(@color)=%% by %%=v(@formatDate)=%% to ensure your vehicle is safe to drive. <br>
+Please return your %%=v(@CarMake)=%% %%=v(@CarModel)=%% %%=v(@color)=%% by %%=v(@formatDate)=%% to ensure your vehicle
+is safe to drive. <br>
 
 We apologize for any inconvenience this may cause and appreciate your prompt attention to this matter. <br>
 
@@ -410,7 +422,7 @@ SET @UppDprogram = Uppercase(@Dprogram)
 SET @Courses = Uppercase(AttributeValue("Courses"))
 SET @today = Now()
 SET @WorkshopDate = FormatDate(DateAdd(@today, 7, "D"), "MMMM d, yyyy")
-SET @GuestLecture  = FormatDate(DateAdd(@today, 14, "D"), "MMMM d, yyyy")
+SET @GuestLecture = FormatDate(DateAdd(@today, 14, "D"), "MMMM d, yyyy")
 SET @CDay = FormatDate(@today, "dd ddddd")
 SET @CMonth = Uppercase(FormatDate(@today, "MMMM"))
 ]%%
@@ -419,24 +431,28 @@ SET @CMonth = Uppercase(FormatDate(@today, "MMMM"))
 
 Hello %%=v(@FirstName)=%%, <br>
 
-We are excited to share the latest news and updates for your Bachelor of %%=v(@Dprogram)=%% program. Here are some highlights and upcoming events tailored just for you: 
+We are excited to share the latest news and updates for your Bachelor of %%=v(@Dprogram)=%% program. Here are some
+highlights and upcoming events tailored just for you:
 <br>
 ### Your Courses: <br>
 %%=v(@Courses)=%%
 <br><br>
 ### Upcoming Events: <br>
 - **Workshop: Advanced Topics in %%=v(@UppDprogram)=%%** on %%=v(@WorkshopDate)=%%<br>
-- **Guest Lecture:  %%=v(@Dprogram)=%% Innovations** on %%=v(@GuestLecture)=%%. 
+- **Guest Lecture: %%=v(@Dprogram)=%% Innovations** on %%=v(@GuestLecture)=%%.
 <br><br>
-These events are designed to enhance your learning experience and provide you with additional resources and insights from experts in your field. 
+These events are designed to enhance your learning experience and provide you with additional resources and insights
+from experts in your field.
 <br><br>
-We hope you find these events informative and engaging. Stay tuned for more updates and resources to support your studies. 
+We hope you find these events informative and engaging. Stay tuned for more updates and resources to support your
+studies.
 <br><br>
 Best regards, <br>
 Your University Team
 
 <br>
-Subject: It's your %%=v(@CDay)=%%, %%=v(@CMonth)=%% Monthly Newsletter: Updates for Your Bachelor of %%=v(@Dprogram)=%% Program
+Subject: It's your %%=v(@CDay)=%%, %%=v(@CMonth)=%% Monthly Newsletter: Updates for Your Bachelor of %%=v(@Dprogram)=%%
+Program
 
 <!-- ampscript june 5  30/6-->
 
@@ -449,7 +465,11 @@ SET @today = Now()
 SET @month = FormatDate(@today,"MMM")
 SET @refLink = Concat("skillprofriends.com/",@month,@upcCode)
 
-SET @msg = Concat("Hello ",@FirstName,",<br>Thank you for being one of our most engaged users!<br>As a token of our appreciation, we're inviting you to refer at least three friends using your unique referral link<br><br> Referral Link = <a href='",@refLink,"'>",@refLink,"</a>.<br><br> Once your referrals join, you'll receive exclusive one-on-one access to our top coach to help develop your career and skill sets.<br> Thank you for your support! <br><br>Reply back STOP to opt out of all SMS marketing messages.")
+SET @msg = Concat("Hello ",@FirstName,",<br>Thank you for being one of our most engaged users!<br>As a token of our
+appreciation, we're inviting you to refer at least three friends using your unique referral link<br><br> Referral Link =
+<a href='",@refLink,"'>",@refLink,"</a>.<br><br> Once your referrals join, you'll receive exclusive one-on-one access to
+our top coach to help develop your career and skill sets.<br> Thank you for your support! <br><br>Reply back STOP to opt
+out of all SMS marketing messages.")
 ]%%
 
 %%=v(@msg)=%%
@@ -471,53 +491,69 @@ SET @LastWithdrawnDate = [LastWithdrawnDate]
 SET @FormattedAccountNumber = Concat("XXXXXXXX", Substring(@AccountNumber, 9, 4))
 
 IF DATEDIFF(NOW(), @LastWithdrawnDate, "d") > 30 THEN
-  SET @Message = "Immediate attention required! Please deposit funds immediately to avoid significant fees."
-ELSEIF @NegativeBalance >= 100 AND @NegativeBalance <= 200 THEN
-  SET @Message = "Your account needs attention. Please deposit funds soon to avoid any fees."
-ELSE
-  SET @Message = "Please deposit funds at your earliest convenience to avoid any fees."
-ENDIF
+SET @Message = "Immediate attention required! Please deposit funds immediately to avoid significant fees."
+ELSEIF @NegativeBalance >= 100 AND @NegativeBalance <= 200 THEN SET
+    @Message="Your account needs attention. Please deposit funds soon to avoid any fees." ELSE SET
+    @Message="Please deposit funds at your earliest convenience to avoid any fees." ENDIF SET
+    @FormattedNegativeBalance=Concat("-$", Format(@NegativeBalance, "0.00" )) ]%% Hello %%=v(@FirstName)=%%,<br> Your
+    SafeBank account ending in %%=v(@FormattedAccountNumber)=%% <br> is currently overdrawn by
+    %%=v(@FormattedNegativeBalance)=%%.<br>
+    %%=v(@Message)=%% <br><br>
 
-SET @FormattedNegativeBalance = Concat("-$", Format(@NegativeBalance, "0.00"))
+    Reply back STOP to opt out.
 
-]%%
+    <!-- July 1 Vince -->
+    %%[
+    SET @fName = [FirstName]
+    SET @accountNum = [AccountNumber]
+    SET @negativeBal = [NegativeBalance]
+    SET @trimFname = TRIM(@fName)
+    SET @properfName = PROPERCASE(@trimFname)
+    SET @lengthAcct = Length(@accountNum)
+    SET @fourDigit = substring(@accountNum,subtract(@lengthAcct,3))
+    SET @negBalance = CONCAT("-",FORMAT(@negativeBal,"c"))
+    ]%%
+    Hello %%=v(@properfName)=%%,<br> Your SafeBank account ending in %%=v(@fourDigit)=%% <br> is currently overdrawn by
+    %%=v(@negBalance)=%%.<br>
+    %%=v(@Message)=%% <br><br>
 
-Hello %%=v(@FirstName)=%%,<br> Your SafeBank account ending in %%=v(@FormattedAccountNumber)=%% <br> is currently overdrawn by %%=v(@FormattedNegativeBalance)=%%.<br>
-%%=v(@Message)=%% <br><br>
+    <!-- July 2 Vince -->
+    %%[
+    /* Retrieve customer and agent details from the data extension */
+    SET @UserID = [UserID]
+    SET @FirstName = Propercase(Trim([FirstName]))
+    SET @Suburb = Propercase(Trim([Suburb]))
+    SET @AgentName = Propercase(Trim([AgentName]))
+    SET @AgentMobile = Format(Trim([AgentMobile]), "0### ### ###")
+    ]%%
 
-Reply back STOP to opt out.
+    Hello %%=v(@FirstName)=%%,
 
-<!-- July 1 Vince -->
-%%[
-SET @fName = [FirstName]
-SET @accountNum = [AccountNumber]
-SET @negativeBal = [NegativeBalance]
-SET @trimFname = TRIM(@fName)
-SET @properfName = PROPERCASE(@trimFname)
-SET @lengthAcct = Length(@accountNum)
-SET @fourDigit = substring(@accountNum,subtract(@lengthAcct,3))
-SET @negBalance = CONCAT("-",FORMAT(@negativeBal,"c"))
-]%%
-Hello %%=v(@properfName)=%%,<br> Your SafeBank account ending in %%=v(@fourDigit)=%% <br> is currently overdrawn by %%=v(@negBalance)=%%.<br>
-%%=v(@Message)=%% <br><br>
-
-<!-- July 2 Vince -->
-%%[
-/* Retrieve customer and agent details from the data extension */
-SET @UserID = [UserID]
-SET @FirstName = Propercase(Trim([FirstName]))
-SET @Suburb = Propercase(Trim([Suburb]))
-SET @AgentName = Propercase(Trim([AgentName]))
-SET @AgentMobile = Format(Trim([AgentMobile]), "0### ### ###")
-]%%
-
-Hello %%=v(@FirstName)=%%,
-
-Thank you for visiting our open house in %%=v(@Suburb)=%%. Are you still interested in buying a property in this area? For more information and insights on upcoming open houses, please contact %%=v(@AgentName)=%% at %%=v(@AgentMobile)=%%.
+    Thank you for visiting our open house in %%=v(@Suburb)=%%. Are you still interested in buying a property in this
+    area? For more information and insights on upcoming open houses, please contact %%=v(@AgentName)=%% at
+    %%=v(@AgentMobile)=%%.
 
 
 
-Reply STOP to 0410456890 to opt out of messages. 
+    Reply STOP to 0410456890 to opt out of messages.
 
- <!--  -->
- 
+    <!--July 03  -->
+    %%[
+    SET @FirstName = Trim([FirstName])
+    SET @LastName = [LastName]
+    SET @Destination = [Destination]
+    SET @FlightDate = [FlightDate]
+    SET @FlightNumber = [FlightNumber]
+    SET @properfName = PROPERCASE(@FirstName)
+    SET @properDestiny = PROPERCASE(@Destination)
+    SET @FormattedFlightDate = Format(@FlightDate, "MMMM d, yyyy, h:mm tt")
+
+    SET @AirportArrivalTime = DateAdd(@FlightDate, -120, "mi")
+    SET @FormattedArrivalTime = Format(@AirportArrivalTime, "h:mm tt")
+    ]%%
+
+    Hello %%=v(@properfName)=%%, This is a reminder for your upcoming flight to %%=v(@properDestiny)=%% on
+    %%=v(@FormattedFlightDate)=%%. Your flight number is %%=v(@FlightNumber)=%%. Please arrive at the airport by
+    %%=v(@FormattedArrivalTime)=%%, at least 2 hours before departure.
+
+    Reply STOP to 0410456890 to opt out of messages.
