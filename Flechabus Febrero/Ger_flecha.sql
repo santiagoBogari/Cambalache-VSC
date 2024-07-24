@@ -1,7 +1,7 @@
 /*  */
 
 SELECT DISTINCT a.id,
-       a.PersonContactId,
+       a.Person ctId,
        a.Name AS Nombre,
        a.FirstName,
        a.LastName,

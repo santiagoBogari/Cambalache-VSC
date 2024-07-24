@@ -243,6 +243,7 @@ LEFT JOIN _Journey
 LEFT JOIN   Emails_Account_Contact_Lead as Acc
         ON Acc.Email = _Subscribers.EmailAddress
 WHERE _Click.EventDate IS NOT NULL
+/*  (1039 rows) */
 
 /*  */
 SELECT DISTINCT
@@ -289,4 +290,159 @@ LEFT JOIN _Journey
 LEFT JOIN   Emails_Account_Contact_Lead as Acc
         ON Acc.Email = _Subscribers.EmailAddress
 WHERE _Open.EventDate IS NOT NULL
-/* 752  DE Emails con clicks reporte */ 
+/* DE tiene duplicados que abrieron varias veces (6531 rows)*/ 
+
+/*  */
+SELECT
+    Name,
+    EmailName,
+    SubscriberEmail,
+    OpenEventDate,
+    ClickEventDate,
+    URL,
+    LinkName,
+    LinkContent,
+    DateJoined,
+    SubscribersStatus,
+    FromName,
+    FromEmail,
+    SchedTime,
+    ModifiedDate,
+    EmailSubject,
+    Category,
+    JobCreatedDate,
+    SendClassificationType,
+    ActivityName,
+    ActivityType,
+    JourneyName,
+    VersionNumber,
+    JourneyCreatedDate,
+    LastPublishedDate,
+    JourneyStatus
+FROM (
+    SELECT
+        acc.Name as Name,
+        _Job.EmailName,
+        _Subscribers.EmailAddress AS SubscriberEmail,
+        _Open.EventDate AS OpenEventDate,
+        _Click.EventDate AS ClickEventDate,
+        _Click.URL,
+        _Click.LinkName,
+        _Click.LinkContent,
+        _Subscribers.DateJoined,
+        _Subscribers.Status AS SubscribersStatus,
+        _Job.FromName,
+        _Job.FromEmail,
+        _Job.SchedTime,
+        _Job.ModifiedDate,
+        _Job.EmailSubject,
+        _Job.Category,
+        _Job.CreatedDate AS JobCreatedDate,
+        _Job.SendClassificationType,
+        _JourneyActivity.ActivityName,
+        _JourneyActivity.ActivityType,
+        _Journey.JourneyName,
+        _Journey.VersionNumber,
+        _Journey.CreatedDate AS JourneyCreatedDate,
+        _Journey.LastPublishedDate,
+        _Journey.JourneyStatus,
+        ROW_NUMBER() OVER (PARTITION BY _Subscribers.EmailAddress, _Job.EmailName ORDER BY _Open.EventDate) AS rn
+    FROM _Open
+    LEFT JOIN _Click
+        ON _Open.JobID = _Click.JobID
+        AND _Open.ListID = _Click.ListID
+        AND _Open.BatchID = _Click.BatchID
+        AND _Open.SubscriberID = _Click.SubscriberID
+        AND _Click.IsUnique = 1
+    LEFT JOIN _Subscribers
+        ON _Open.SubscriberID = _Subscribers.SubscriberID
+    LEFT JOIN _Job
+        ON _Open.JobID = _Job.JobID
+    LEFT JOIN _JourneyActivity
+        ON _Open.TriggererSendDefinitionObjectID = _JourneyActivity.JourneyActivityObjectID
+    LEFT JOIN _Journey
+        ON _JourneyActivity.VersionID = _Journey.VersionID
+    LEFT JOIN Emails_Account_Contact_Lead as Acc
+        ON Acc.Email = _Subscribers.EmailAddress
+    WHERE _Open.EventDate IS NOT NULL
+) AS subquery
+WHERE rn = 1
+/* opens sin duplicados (3632 rows)*/
+
+/*  */
+SELECT
+    Name,
+    EmailName,
+    SubscriberEmail,
+    OpenEventDate,
+    ClickEventDate,
+    URL,
+    LinkName,
+    LinkContent,
+    DateJoined,
+    SubscribersStatus,
+    FromName,
+    FromEmail,
+    SchedTime,
+    ModifiedDate,
+    EmailSubject,
+    Category,
+    JobCreatedDate,
+    SendClassificationType,
+    ActivityName,
+    ActivityType,
+    JourneyName,
+    VersionNumber,
+    JourneyCreatedDate,
+    LastPublishedDate,
+    JourneyStatus
+FROM (
+    SELECT
+        acc.Name as Name,
+        _Job.EmailName,
+        _Subscribers.EmailAddress AS SubscriberEmail,
+        _Open.EventDate AS OpenEventDate,
+        _Click.EventDate AS ClickEventDate,
+        _Click.URL,
+        _Click.LinkName,
+        _Click.LinkContent,
+        _Subscribers.DateJoined,
+        _Subscribers.Status AS SubscribersStatus,
+        _Job.FromName,
+        _Job.FromEmail,
+        _Job.SchedTime,
+        _Job.ModifiedDate,
+        _Job.EmailSubject,
+        _Job.Category,
+        _Job.CreatedDate AS JobCreatedDate,
+        _Job.SendClassificationType,
+        _JourneyActivity.ActivityName,
+        _JourneyActivity.ActivityType,
+        _Journey.JourneyName,
+        _Journey.VersionNumber,
+        _Journey.CreatedDate AS JourneyCreatedDate,
+        _Journey.LastPublishedDate,
+        _Journey.JourneyStatus,
+        ROW_NUMBER() OVER (PARTITION BY _Subscribers.EmailAddress, _Click.URL ORDER BY _Click.EventDate) AS rn
+    FROM _Open
+    LEFT JOIN _Click
+        ON _Open.JobID = _Click.JobID
+        AND _Open.ListID = _Click.ListID
+        AND _Open.BatchID = _Click.BatchID
+        AND _Open.SubscriberID = _Click.SubscriberID
+        AND _Click.IsUnique = 1
+    LEFT JOIN _Subscribers
+        ON _Open.SubscriberID = _Subscribers.SubscriberID
+    LEFT JOIN _Job
+        ON _Open.JobID = _Job.JobID
+    LEFT JOIN _JourneyActivity
+        ON _Open.TriggererSendDefinitionObjectID = _JourneyActivity.JourneyActivityObjectID
+    LEFT JOIN _Journey
+        ON _JourneyActivity.VersionID = _Journey.VersionID
+    LEFT JOIN Emails_Account_Contact_Lead as Acc
+        ON Acc.Email = _Subscribers.EmailAddress
+    WHERE _Click.EventDate IS NOT NULL
+) AS subquery
+WHERE rn = 1
+/* clicks sin duplicados (405 rows) */
+

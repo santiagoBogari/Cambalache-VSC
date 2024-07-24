@@ -282,3 +282,46 @@ WHERE
     AND s.EventDate <= '2023-12-31' 
 GROUP BY
     u.state
+
+
+/* -------------------------------------------------- */
+SELECT Name
+FROM SFImport_Accounts_2
+
+
+SELECT Name, Phone
+FROM SFImport_Accounts_2
+
+
+SELECT Name, Phone
+FROM SFImport_Accounts_2
+WHERE Phone IS NOT NULL
+/*  */
+SELECT Name, Phone
+FROM SFImport_Accounts_2
+WHERE Phone = '4652-4870/4110'
+
+/*  */
+SELECT  
+co.Id as ContratoId, 
+AC.Name as AccountName,
+AC.Tiene_contrato_activo__c as Tiene_contrato_activo
+
+
+FROM SFImport_Contrato as co
+
+LEFT JOIN SFImport_Accounts_2 as AC on co.AccountId = AC.Id
+
+/*  */
+SELECT  
+co.Id as ContratoId, 
+AC.Name as AccountName,
+AC.Tiene_contrato_activo__c as Tiene_contrato_activo,
+AC.email__c
+
+
+FROM SFImport_Contrato as co
+
+LEFT JOIN SFImport_Accounts_2 as AC on co.AccountId = AC.Id
+
+WHERE AC.Tiene_contrato_activo__c ='1'
