@@ -33,3 +33,23 @@ Visit your nearby Next Auto dealer for all your vehicle needs.
 <br><br>
 Best regards,<br>
 Next Auto
+
+<!-- 
+%%[
+SET @FirstName = Trim([FirstName])
+SET @LastName = [LastName]
+SET @Destination = [Destination]
+SET @FlightDate = [FlightDate]
+SET @FlightNumber = [FlightNumber]
+SET @properfName = PROPERCASE(@FirstName)
+SET @properDestiny = PROPERCASE(@Destination)
+SET @FormattedFlightDate = Format(@FlightDate, "MMMM d, yyyy, h:mm tt")
+
+SET @AirportArrivalTime = DateAdd(@FlightDate, -120, "mi")
+SET @FormattedArrivalTime = Format(@AirportArrivalTime, "h:mm tt")
+]%%
+
+Hello %%=v(@properfName)=%%, This is a reminder for your upcoming flight to %%=v(@properDestiny)=%% on %%=v(@FormattedFlightDate)=%%. Your flight number is %%=v(@FlightNumber)=%%. Please arrive at the airport by %%=v(@FormattedArrivalTime)=%%, at least 2 hours before departure.
+
+
+Reply STOP to 0410456890 to opt out of messages.  -->

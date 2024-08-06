@@ -358,3 +358,74 @@ FROM (
 ) AS subquery
 WHERE rn = 1
 /* (422 rows) */
+
+/* entre -7 y 90 dias */
+
+SELECT TOP 2000
+  co.Id as ContratoId, 
+  AC.Name as AccountName,
+  AC.Tienecontratoactivo__c as Tiene_contrato_activo,
+  co.AccountId as AccountId,
+  AC.email__c as AccountEmail,
+  co.Email_Contacto_Tecnico__c as Email_Contacto_Tecnico,
+  co.Email_Contacto_Comercial__c as Email_Contacto_Comercial,
+  co.StartDate, co.EndDate, 
+  co.BillingCountry,
+  co.ShippingCountry,
+  co.OwnerId, co.Status,
+  co.StatusCode,
+  co.CreatedDate, co.CreatedById, co.LastModifiedDate,
+  co.LastModifiedById,
+  co.Fecha_Fin_Contrato__c,
+  co.Sub_Brand__c,
+  co.Territorio__c, co.Pais__c, co.Dias_para_vencer__c, 
+  AC.Fecha_proximo_vencimiento_contrato__c as fecha_prox_vto_contrato,
+  AC.Fecha_de_vencimiento_de_ltimo_contrato__c as fecha_vto_ultimo_contrato, 	
+  AC.Estado_seg_n_Contrato__c as Estado_segun_Contrato
+FROM SFImport_Contrato as co
+LEFT JOIN SFImport_Accounts_3 as AC on co.AccountId = AC.Id
+WHERE (AC.email__c IS NOT NULL OR co.Email_Contacto_Tecnico__c IS NOT NULL OR co.Email_Contacto_Comercial__c IS NOT NULL)
+  AND co.EndDate BETWEEN DATEADD(day, -7, GETDATE()) AND DATEADD(day, 91, GETDATE())
+  ORDER BY co.EndDate ASC
+
+  /*  */
+
+  /* sin duplicados */
+  SELECT TOP 2000
+    co.Id as ContratoId,
+    AC.Name as AccountName,
+    AC.Tienecontratoactivo__c as Tiene_contrato_activo,
+    co.AccountId as AccountId,
+    AC.email__c as AccountEmail,
+    co.Email_Contacto_Tecnico__c as Email_Contacto_Tecnico,
+    co.Email_Contacto_Comercial__c as Email_Contacto_Comercial,
+    co.StartDate,
+    co.EndDate,
+    co.BillingCountry,
+    co.ShippingCountry,
+    co.OwnerId,
+    co.Status,
+    co.StatusCode,
+    co.CreatedDate,
+    co.CreatedById,
+    co.LastModifiedDate,
+    co.LastModifiedById,
+    co.Fecha_Fin_Contrato__c,
+    co.Sub_Brand__c,
+    co.Territorio__c,
+    co.Pais__c,
+    co.Dias_para_vencer__c,
+    AC.Fecha_proximo_vencimiento_contrato__c as fecha_prox_vto_contrato,
+    AC.Fecha_de_vencimiento_de_ltimo_contrato__c as fecha_vto_ultimo_contrato,
+    AC.Estado_seg_n_Contrato__c as Estado_segun_Contrato
+FROM SFImport_Contrato as co
+LEFT JOIN SFImport_Accounts_3 as AC on co.AccountId = AC.Id
+WHERE (AC.email__c IS NOT NULL OR co.Email_Contacto_Tecnico__c IS NOT NULL OR co.Email_Contacto_Comercial__c IS NOT NULL)
+AND AC.Fecha_de_vencimiento_de_ltimo_contrato__c BETWEEN DATEADD(day, -7, GETDATE()) AND DATEADD(day, 91, GETDATE())
+AND co.EndDate = (
+    SELECT MAX(co2.EndDate)
+    FROM SFImport_Contrato as co2
+    WHERE co2.AccountId = co.AccountId
+)
+ORDER BY AC.Fecha_de_vencimiento_de_ltimo_contrato__c ASC
+/* 52 rows DE Contratos_prox_venc  */

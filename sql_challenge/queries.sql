@@ -201,3 +201,10 @@ WHERE
     s.EventDate >= DATEADD(DAY, -1, GETDATE());
 
     /*  */
+
+SELECT accountname, Estado_segun_Contrato, fecha_vto_ultimo_contrato, accountemail, email_contacto_tecnico, email_contacto_comercial
+FROM Cuentas_Contratos
+
+WHERE accountname LIKE '%Hiperinox%'
+
+/*  */

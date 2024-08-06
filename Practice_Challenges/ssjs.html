@@ -104,3 +104,123 @@ Write("</table>");
 
 <!-- ------------------------------------------------------- -->
 
+<!-- SSJS para insertar un Data row -->
+
+<script runat="server">
+  /*
+   * Script Author: [Your Name]
+   * Date: [Current Date]
+   * Description: This script inserts data into a specified Data Extension with the provided column names
+   * and values.
+   */
+
+  // Define the Data Extension name
+  var deName = "Dataview_Sent";
+
+  // Define the column names and values for insertion
+  var columnNames = ["JobID", "ListID", "BatchID", "SubscriberID", "SubscriberKey", "EventDate"];
+  var columnValues = [12345, 12345, 12345, 1234567890, "shashi@gmail.com", "11/29/2023"];
+
+  // Insert rows into the Data Extension
+  var rows = Platform.Function.InsertData(deName, columnNames, columnValues);
+
+  // Output the result
+  Platform.Response.Write("Rows Inserted: " + rows);
+</script>
+
+
+
+<!-- actualiza el NewAlphanumericID de un ContactKey dado -->
+
+<script runat="server">
+
+  // Define the Data Extension name
+  var deName = "TestContactsDE";
+
+  // Define the contact key to update
+  var contactKey = "12345";
+
+  // Define the new value for NewAlphanumericID
+  var newAlphanumericID = "AA3355";
+
+  // Update the NewAlphanumericID field for the given ContactKey
+  var updatedRows = Platform.Function.UpdateData(deName, ["ContactKey"], [contactKey], ["NewAlphanumericID"], [newAlphanumericID]);
+
+  // Output the result
+  Platform.Response.Write("Rows Updated: " + updatedRows);
+
+</script>
+
+<!--  -->
+
+<!-- funciona, agrega registro -->
+
+<script runat="server">
+
+  Platform.Load("core", "1.1");
+
+/*********************** ADD ***********************/
+
+var addedRowCount = Platform.Function.InsertData(
+      'Customers',
+      ['SubscriberKey', 'EmailAddress', 'FirstName', 'LastName'],
+      [GUID(), 'john.smith@mail.com', 'John', 'Smith']
+  );
+
+Write('Rows added: ' + Stringify(addedRowCount));
+
+/********************* UPDATE *********************/
+
+var updatedRowCount = Platform.Function.UpdateData(
+      'Customers',
+      ['SubscriberKey', 'EmailAddress'],
+      ['123456', 'john.smith@mail.com'],
+      ['FirstName', 'LastName'],
+      ['John', 'Smith']
+  );
+
+Write('Rows updated: ' + Stringify(updatedRowCount));
+
+</script>
+
+<!--  -->
+
+<!-- si existe el SubscriberKey, lo actualiza -->
+<script runat="server">
+
+  Platform.Load("core", "1.1");
+
+  var dataRows = Platform.Function.LookupRows('Customers','SubscriberKey','104d61ab-0ac6-4479-b371-3458a6b369ee');
+
+  if(dataRows && dataRows.length > 0){
+    var updatedRowCount = Platform.Function.UpdateData(
+      'Customers',
+      ['SubscriberKey', 'EmailAddress'],
+      ['123456', 'john.smith@mail.com'],
+      ['FirstName', 'LastName'],
+      ['George', 'Smith']
+  );
+  Write('Rows updated: ' + Stringify(updatedRowCount));
+  }else{
+
+var addedRowCount = Platform.Function.InsertData(
+      'Customers',
+      ['SubscriberKey', 'EmailAddress', 'FirstName', 'LastName'],
+      [GUID(), 'john.smith@mail.com', 'John', 'Smith']
+  );
+
+Write('Rows added: ' + Stringify(addedRowCount));
+  }
+</script>
+
+
+<!-- funciona, dispara el html block con el ampscript -->
+<script runat="server">
+  var ampscriptCode = Platform.Function.ContentBlockByID("277037");
+ </script>
+%%[ 
+set @email = "simmons@limedash.com" 
+set @contactKey = "0303" 
+InsertDE("TestContactsDE","Email", @email,"ContactKey", @contactKey) ]%%
+
+<!--  -->
