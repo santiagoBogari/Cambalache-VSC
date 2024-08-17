@@ -217,3 +217,96 @@ AC.email__c as AccountEmail,
 co.Email_Contacto_Tecnico__c as Email_Contacto_Tecnico,
 co.Email_Contacto_Comercial__c as Email_Contacto_Comercial,
 co.StartDate, co.EndDate 
+
+/* prueba agregar contactos, trae muchos duplicados */
+SELECT  
+co.Id as ContratoId, 
+AC.Name as AccountName,
+AC.Tienecontratoactivo__c as Tiene_contrato_activo,
+co.AccountId as AccountId,
+AC.email__c as AccountEmail,
+cont.email as ContactEmail,
+co.Email_Contacto_Tecnico__c as Email_Contacto_Tecnico,
+co.Email_Contacto_Comercial__c as Email_Contacto_Comercial,
+co.StartDate, co.EndDate, 
+co.BillingCountry,
+co.ShippingCountry,
+co.OwnerId, co.Status,
+co.StatusCode,
+co.CreatedDate, co.CreatedById, co.LastModifiedDate,
+co.LastModifiedById,
+co.Fecha_Fin_Contrato__c,
+co.Sub_Brand__c,
+co.Territorio__c, co.Pais__c, co.Dias_para_vencer__c,
+AC.Fecha_de_vencimiento_de_ltimo_contrato__c as fecha_vto_ultimo_contrato, 	
+AC.Estado_seg_n_Contrato__c as Estado_segun_Contrato
+
+FROM SFImport_Contrato as co
+LEFT JOIN SFImport_Accounts_2 as AC on co.AccountId = AC.Id
+LEFT JOIN SFImport_Contacts as cont on cont.accountid = AC.Id
+/*  */
+
+SELECT DISTINCT
+  Contratos.Id AS ContratoId,
+  Accounts.Name AS AccountName,
+  Accounts.Razon_Social__c AS Razon_Social,
+  Accounts.Tienecontratoactivo__c AS Tiene_contrato_activo,
+  Accounts.Id AS AccountId,
+  Accounts.email__c AS AccountEmail,
+  Contratos.Email_Contacto_Tecnico__c AS Email_Contacto_Tecnico,
+  Contratos.Email_Contacto_Comercial__c AS Email_Contacto_Comercial,
+  Contacts.Email AS Email_Contacto,
+  Contratos.StartDate,
+  Contratos.EndDate,
+  Contratos.BillingCountry,
+  Contratos.ShippingCountry,
+  Contratos.OwnerId,
+  Contratos.Status,
+  Contratos.StatusCode,
+  Contratos.CreatedDate,
+  Contratos.Fecha_Fin_Contrato__c,
+  Contratos.Sub_Brand__c,
+  Contratos.Territorio__c,
+  Contratos.Pais__c,
+  Contratos.Dias_para_vencer__c,
+  Accounts.Fecha_de_vencimiento_de_ltimo_contrato__c AS fecha_vto_ultimo_contrato,
+  Accounts.Estado_seg_n_Contrato__c AS Estado_segun_Contrato
+FROM SFImport_Contrato AS Contratos
+LEFT JOIN SFImport_Accounts_2 AS Accounts ON Contratos.AccountId = Accounts.Id
+LEFT JOIN SFImport_Contacts AS Contacts ON Contacts.AccountId = Accounts.Id
+WHERE Accounts.email__c IS NOT NULL OR Contratos.Email_Contacto_Tecnico__c IS NOT NULL
+  OR Contratos.Email_Contacto_Comercial__c IS NOT NULL OR Contacts.Email IS NOT NULL
+
+  /* distinct email contacts */
+  SELECT DISTINCT
+  Contacts.Email AS Email_Contacto
+FROM SFImport_Contrato AS Contratos
+LEFT JOIN SFImport_Accounts_2 AS Accounts ON Contratos.AccountId = Accounts.Id
+LEFT JOIN SFImport_Contacts AS Contacts ON Contacts.AccountId = Accounts.Id
+WHERE Accounts.email__c IS NOT NULL OR Contratos.Email_Contacto_Tecnico__c IS NOT NULL
+  OR Contratos.Email_Contacto_Comercial__c IS NOT NULL OR Contacts.Email IS NOT NULL
+  /*  (2737 rows) */
+
+/*  */
+
+SELECT DISTINCT
+  Accounts.Name AS AccountName,
+  Accounts.Razon_Social__c AS Razon_Social,
+  Accounts.Tienecontratoactivo__c AS Tiene_contrato_activo,
+  Accounts.Id AS AccountId,
+  Accounts.email__c AS AccountEmail,
+  Contratos.Email_Contacto_Tecnico__c AS Email_Contacto_Tecnico,
+  Contratos.Email_Contacto_Comercial__c AS Email_Contacto_Comercial,
+  Contacts.Email AS Email_Contacto,
+  Contratos.ShippingCountry,
+  Contratos.Status,
+  Contratos.StatusCode,
+  Contratos.Sub_Brand__c,
+  Contratos.Territorio__c,
+  Accounts.Fecha_de_vencimiento_de_ltimo_contrato__c AS fecha_vto_ultimo_contrato,
+  Accounts.Estado_seg_n_Contrato__c AS Estado_segun_Contrato
+FROM SFImport_Contrato AS Contratos
+LEFT JOIN SFImport_Accounts_2 AS Accounts ON Contratos.AccountId = Accounts.Id
+LEFT JOIN SFImport_Contacts AS Contacts ON Contacts.AccountId = Accounts.Id
+WHERE Accounts.email__c IS NOT NULL OR Contratos.Email_Contacto_Tecnico__c IS NOT NULL
+  OR Contratos.Email_Contacto_Comercial__c IS NOT NULL OR Contacts.Email IS NOT NULL

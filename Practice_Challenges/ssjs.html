@@ -223,4 +223,153 @@ set @email = "simmons@limedash.com"
 set @contactKey = "0303" 
 InsertDE("TestContactsDE","Email", @email,"ContactKey", @contactKey) ]%%
 
+<!--  anda-->
+<script runat="server">
+
+  Platform.Load("core", "1.1");
+
+  var dataRows = Platform.Function.LookupRows('Customers','EmailAddress','john.smith@mail.com');
+
+  if(dataRows && dataRows.length > 0){
+    var updatedRowCount = Platform.Function.UpdateData(
+      'Customers',
+      ['EmailAddress'],
+      ['john.smith@mail.com'],
+      ['NewAlphanumericID'],
+      ['newID_333']
+  );
+  Write('Rows updated: ' + Stringify(updatedRowCount));
+  }else{
+
+var addedRowCount = Platform.Function.InsertData(
+      'Customers',
+      ['SubscriberKey', 'EmailAddress', 'FirstName', 'LastName'],
+      [GUID(), 'john.smith@mail.com', 'John', 'Smith']
+  );
+
+Write('Rows added: ' + Stringify(addedRowCount));
+  }
+</script>
+
+<!--  -->
+
+<!-- <script runat="server">
+  Platform.Load('Core','1');
+
+ 
+  var CustomersDE = DataExtension.Init('Customers');
+ 
+  var customerId = Platform.Recipient.GetAttributeValue('SubscriberKey') ;
+  
+  var customers = CustomersDE.Rows.Lookup(['CustomerId'], [customerId]);
+
+ 
+  if (customers.length > 0) {
+ 
+   for (var i = 0; i < customers.length; i++) {
+    var genrePref = musicSubscriberPreferenceRS[i]['GenrePreference'];
+    var upcomingShowRS = upcomingShowDE.Rows.Lookup(['City','Genre'], [city, genrePref]); -->
+ 
+   <!--  -->
+
+   <script runat="server">
+
+    Platform.Load("core", "1.1");
+  
+    var dataRows = Platform.Function.LookupRows('Customers','EmailAddress','john.smith@mail.com');
+  
+    if(dataRows && dataRows.length > 0){
+
+      for (var i = 0; i < dataRows.length; i++) {
+       
+        var updatedRowCount = Platform.Function.UpdateData(
+        'Customers',
+        ['EmailAddress'],
+        ['john.smith@mail.com'],
+        ['NewAlphanumericID'],
+        [GUID()]
+    );
+    Write('Rows updated: ' + Stringify(updatedRowCount));
+
+    }
+      
+    }else{
+  
+  var addedRowCount = Platform.Function.InsertData(
+        'Customers',
+        ['SubscriberKey', 'EmailAddress', 'FirstName', 'LastName'],
+        [GUID(), 'john.smith@mail.com', 'John', 'Smith']
+    );
+  
+  Write('Rows added: ' + Stringify(addedRowCount));
+    }
+  </script>
+
+  <!-- anda a medias -->
+  <script runat="server">
+
+    Platform.Load("core", "1.1");
+  
+    var dataRows = Platform.Function.LookupRows('Customers', 'EmailAddress', 'john.smith@mail.com');
+  
+    if (dataRows && dataRows.length > 0) {
+      for (var i = 0; i < dataRows.length; i++) {
+        var guid = GUID();
+       var birthdayDE = DataExtension.Init("Customers");
+       var subscriberKey = dataRows[i]["SubscriberKey"];
+       var newAlphanumericID = dataRows[i]["NewAlphanumericID"];
+  birthdayDE.Rows.Update({NewAlphanumericID: 100 + i}, ["EmailAddress"], ["john.smith@mail.com"]);
+  
+       Platform.Response.Write("Index: " + i + ", SubscriberKey: " + subscriberKey + ", NewAlphanumericID: " + newAlphanumericID + "<br>");
+      }
+    }
+  
+  </script>
+
+  <!--anda, desde automation actualiza id correlativo 100 + [i] -->
+  <script runat="server">
+
+    Platform.Load("core", "1.1");
+  
+    var dataRows = Platform.Function.LookupRows('Customers', 'EmailAddress', 'john.smith@mail.com');
+  
+    if (dataRows && dataRows.length > 0) {
+      for (var i = 0; i < dataRows.length; i++) {
+        var guid = GUID();
+       var birthdayDE = DataExtension.Init("Customers");
+       var subscriberKey = dataRows[i]["SubscriberKey"];
+       var newAlphanumericID = dataRows[i]["NewAlphanumericID"];
+  birthdayDE.Rows.Update({NewAlphanumericID: 100 + [i]}, ["EmailAddress"], ["john.smith@mail.com"]);
+  
+       Platform.Response.Write("Index: " + i + ", SubscriberKey: " + subscriberKey + ", NewAlphanumericID: " + newAlphanumericID + "<br>");
+      }
+    }
+  
+  </script>
+
+<!-- anda, desde bloque HTML actualiza id correlativo 100 + i-->
+<script runat="server">
+
+  Platform.Load("core", "1.1");
+
+  var dataRows = Platform.Function.LookupRows('Customers', 'EmailAddress', 'john.smith@mail.com');
+
+  if (dataRows && dataRows.length > 0) {
+    for (var i = 0; i < dataRows.length; i++) {
+      var birthdayDE = DataExtension.Init("Customers");
+      var subscriberKey = dataRows[i]["SubscriberKey"];
+      var newAlphanumericID = 100 + i;  // Asegura que se genere un valor único para cada fila
+
+      // Actualiza cada fila basada en su SubscriberKey, en lugar de EmailAddress
+      birthdayDE.Rows.Update(
+        {NewAlphanumericID: newAlphanumericID}, 
+        ["SubscriberKey"], 
+        [subscriberKey]
+      );
+
+      Platform.Response.Write("Index: " + i + ", SubscriberKey: " + subscriberKey + ", NewAlphanumericID: " + newAlphanumericID + "<br>");
+    }
+  }
+
+</script>
 <!--  -->

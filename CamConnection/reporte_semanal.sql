@@ -446,3 +446,201 @@ FROM (
 WHERE rn = 1
 /* clicks sin duplicados (405 rows) */
 
+ /* automation Query_Clicks  antes*/
+
+SELECT DISTINCT
+        acc.Name as Name,
+        _Job.EmailName,
+        _Subscribers.EmailAddress AS SubscriberEmail,
+        _Open.EventDate AS OpenEventDate,
+        _Click.EventDate AS ClickEventDate,
+        _Click.URL,
+        _Click.LinkName,
+        _Click.LinkContent,
+        _Subscribers.DateJoined,
+        _Subscribers.Status AS SubscribersStatus,
+        _Job.FromName,
+        _Job.FromEmail,
+        _Job.SchedTime,
+        _Job.ModifiedDate,
+        _Job.EmailSubject,
+        _Job.Category,
+        _Job.CreatedDate AS JobCreatedDate,
+        _Job.SendClassificationType,
+        _JourneyActivity.ActivityName,
+        _JourneyActivity.ActivityType,
+        _Journey.JourneyName,
+        _Journey.VersionNumber,
+        _Journey.CreatedDate AS JourneyCreatedDate,
+        _Journey.LastPublishedDate,
+        _Journey.JourneyStatus
+FROM _Open
+LEFT JOIN _Click 
+        ON _Open.JobID = _Click.JobID 
+        AND _Open.ListID = _Click.ListID 
+        AND _Open.BatchID = _Click.BatchID 
+        AND _Open.SubscriberID = _Click.SubscriberID 
+        AND _Click.IsUnique = 1
+LEFT JOIN _Subscribers 
+        ON _Open.SubscriberID = _Subscribers.SubscriberID
+LEFT JOIN _Job 
+        ON _Open.JobID = _Job.JobID
+LEFT JOIN _JourneyActivity 
+        ON _Open.TriggererSendDefinitionObjectID = _JourneyActivity.JourneyActivityObjectID
+LEFT JOIN _Journey 
+        ON _JourneyActivity.VersionID = _Journey.VersionID
+LEFT JOIN   Emails_Account_Contact_Lead as Acc
+        ON Acc.Email = _Subscribers.EmailAddress
+WHERE _Click.EventDate IS NOT NULL
+
+/*  */
+
+/* agregando nombre de cuenta */
+SELECT DISTINCT
+        acc.Name as Name,
+        _Subscribers.EmailAddress AS SubscriberEmail,
+        _Job.EmailName,
+        _Click.URL,
+        _Click.LinkName,
+        _Click.LinkContent,
+        _Subscribers.Status AS SubscribersStatus,
+        _Job.FromName,
+        _Job.FromEmail,
+        _Job.EmailSubject,
+        _Job.Category,
+         _JourneyActivity.ActivityName,
+        _JourneyActivity.ActivityType,
+        _Journey.JourneyName,
+        _Journey.VersionNumber,
+        _Journey.JourneyStatus,
+        _Open.EventDate AS OpenEventDate,
+        _Click.EventDate AS ClickEventDate,
+        _Subscribers.DateJoined,
+        _Job.SchedTime,
+        _Job.ModifiedDate,
+        _Job.CreatedDate AS JobCreatedDate,
+        _Job.SendClassificationType,
+        _Journey.CreatedDate AS JourneyCreatedDate,
+        _Journey.LastPublishedDate
+    
+FROM _Open
+LEFT JOIN _Click 
+        ON _Open.JobID = _Click.JobID 
+        AND _Open.ListID = _Click.ListID 
+        AND _Open.BatchID = _Click.BatchID 
+        AND _Open.SubscriberID = _Click.SubscriberID 
+        AND _Click.IsUnique = 1
+LEFT JOIN _Subscribers 
+        ON _Open.SubscriberID = _Subscribers.SubscriberID
+LEFT JOIN _Job 
+        ON _Open.JobID = _Job.JobID
+LEFT JOIN _JourneyActivity 
+        ON _Open.TriggererSendDefinitionObjectID = _JourneyActivity.JourneyActivityObjectID
+LEFT JOIN _Journey 
+        ON _JourneyActivity.VersionID = _Journey.VersionID
+LEFT JOIN SFImport_Contacts as Con
+        ON Con.Email = _Subscribers.EmailAddress
+LEFT JOIN   SFImport_Accounts_2 as Acc
+        ON Acc.Id = Con.AccountId        
+WHERE _Click.EventDate IS NOT NULL AND (Acc.Name NOT LIKE '%CAMCONNECTION S.A.%'
+AND Acc.Name NOT LIKE '%CAM CONNECTION%')
+
+/* 1068 rows */
+
+ /* automation Query_Opens  antes*/
+
+ SELECT DISTINCT
+acc.Name as Name,
+        _Job.EmailName,
+        _Subscribers.EmailAddress AS SubscriberEmail,
+        _Open.EventDate AS OpenEventDate,
+        _Click.EventDate AS ClickEventDate,
+        _Click.URL,
+        _Click.LinkName,
+        _Click.LinkContent,
+        _Subscribers.DateJoined,
+        _Subscribers.Status AS SubscribersStatus,
+        _Job.FromName,
+        _Job.FromEmail,
+        _Job.SchedTime,
+        _Job.ModifiedDate,
+        _Job.EmailSubject,
+        _Job.Category,
+        _Job.CreatedDate AS JobCreatedDate,
+        _Job.SendClassificationType,
+        _JourneyActivity.ActivityName,
+        _JourneyActivity.ActivityType,
+        _Journey.JourneyName,
+        _Journey.VersionNumber,
+        _Journey.CreatedDate AS JourneyCreatedDate,
+        _Journey.LastPublishedDate,
+        _Journey.JourneyStatus
+FROM _Open
+LEFT JOIN _Click 
+        ON _Open.JobID = _Click.JobID 
+        AND _Open.ListID = _Click.ListID 
+        AND _Open.BatchID = _Click.BatchID 
+        AND _Open.SubscriberID = _Click.SubscriberID 
+        AND _Click.IsUnique = 1
+LEFT JOIN _Subscribers 
+        ON _Open.SubscriberID = _Subscribers.SubscriberID
+LEFT JOIN _Job 
+        ON _Open.JobID = _Job.JobID
+LEFT JOIN _JourneyActivity 
+        ON _Open.TriggererSendDefinitionObjectID = _JourneyActivity.JourneyActivityObjectID
+LEFT JOIN _Journey 
+        ON _JourneyActivity.VersionID = _Journey.VersionID
+LEFT JOIN   Emails_Account_Contact_Lead as Acc
+        ON Acc.Email = _Subscribers.EmailAddress
+WHERE _Open.EventDate IS NOT NULL
+
+/*  */
+ SELECT DISTINCT
+        acc.Name as Name,
+        _Subscribers.EmailAddress AS SubscriberEmail,
+        _Job.EmailName,
+        _Click.URL,
+        _Click.LinkName,
+        _Click.LinkContent,
+        _Subscribers.Status AS SubscribersStatus,
+        _Job.FromName,
+        _Job.FromEmail,
+        _Job.EmailSubject,
+        _Job.Category,
+         _JourneyActivity.ActivityName,
+        _JourneyActivity.ActivityType,
+        _Journey.JourneyName,
+        _Journey.VersionNumber,
+        _Journey.JourneyStatus,
+        _Open.EventDate AS OpenEventDate,
+        _Click.EventDate AS ClickEventDate,
+        _Subscribers.DateJoined,
+        _Job.SchedTime,
+        _Job.ModifiedDate,
+        _Job.CreatedDate AS JobCreatedDate,
+        _Job.SendClassificationType,
+        _Journey.CreatedDate AS JourneyCreatedDate,
+        _Journey.LastPublishedDate
+    
+FROM _Open
+LEFT JOIN _Click 
+        ON _Open.JobID = _Click.JobID 
+        AND _Open.ListID = _Click.ListID 
+        AND _Open.BatchID = _Click.BatchID 
+        AND _Open.SubscriberID = _Click.SubscriberID 
+        AND _Click.IsUnique = 1
+LEFT JOIN _Subscribers 
+        ON _Open.SubscriberID = _Subscribers.SubscriberID
+LEFT JOIN _Job 
+        ON _Open.JobID = _Job.JobID
+LEFT JOIN _JourneyActivity 
+        ON _Open.TriggererSendDefinitionObjectID = _JourneyActivity.JourneyActivityObjectID
+LEFT JOIN _Journey 
+        ON _JourneyActivity.VersionID = _Journey.VersionID
+LEFT JOIN SFImport_Contacts as Con
+        ON Con.Email = _Subscribers.EmailAddress
+LEFT JOIN   SFImport_Accounts_2 as Acc
+        ON Acc.Id = Con.AccountId        
+WHERE _Open.EventDate IS NOT NULL AND (Acc.Name NOT LIKE '%CAMCONNECTION S.A.%'
+AND Acc.Name NOT LIKE '%CAM CONNECTION%')
+/* en QS 11511 en autom 13,112 */
