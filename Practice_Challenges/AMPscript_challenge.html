@@ -53,3 +53,101 @@ Hello %%=v(@properfName)=%%, This is a reminder for your upcoming flight to %%=v
 
 
 Reply STOP to 0410456890 to opt out of messages.  -->
+
+
+---
+
+
+%%[
+
+SET @firstName = [FirstName]
+SET @totalSpend = [TotalSpend]
+
+IF NOT EMPTY(@firstName) THEN
+    SET @firstNameTrim = Trim(@firstName)
+    SET @finalName = Propercase(@firstNameTrim)
+    SET @finalUpperCaseName = Uppercase(@firstNameTrim)
+ELSE
+    SET @finalName = "there"
+    SET @finalUpperCaseName = "DISCOUNT"
+ENDIF
+
+IF @totalSpend > 100 THEN
+   SET @message = "As a valued customer, you get 20% off your next purchase!"
+   SET @discountCode = CONCAT(@finalUpperCaseName, "20OFF")
+ELSE
+   SET @message = "Thank you for being our customer, enjoy 10% off your next purchase!"
+   SET @discountCode = CONCAT(@finalUpperCaseName, "10OFF")
+ENDIF
+
+]%%
+Hello %%=v(@finalName)=%%,
+%%=v(@message)=%%
+Use code: %%=v(@discountCode)=%% at checkout.
+Warm regards,
+The Everyday Essentials Team
+
+<!-- Sample Brief Exercise 2 -->
+%%[
+SET @firstName = Propercase(Trim([FirstName]))  
+SET @eventName = Trim([Event Name])  
+SET @msj = "Hey "  
+IF NOT EMPTY(@firstName) THEN
+    SET @msj = Concat(@msj, @firstName, ", ")  
+ELSE
+    SET @msj = Concat(@msj, "there, ")  
+ENDIF
+
+ 
+IF @eventName == "Tech Talk" THEN 
+    SET @msj = Concat(@msj, "📅 Don't forget! Tomorrow is our Ted Talk event at 2 PM. See you there! 🚀")
+ELSEIF @eventName == "Networking Mixer" THEN 
+    SET @msj = Concat(@msj, "🎉 Get ready! Our Networking Mixer is tomorrow evening at 6 PM. Bring your business cards! 🤝")
+ELSEIF @eventName == "Fitness Bootcamp" THEN 
+    SET @msj = Concat(@msj, "💪 Get pumped! Our Fitness Bootcamp starts tomorrow morning at 8 AM. Don't miss out on the workout of the week! 🏋️‍♂️")
+ELSEIF @eventName == "Movie Night" THEN 
+    SET @msj = Concat(@msj, "🎬 Movie buffs, unite! Tomorrow night at 7 PM is our Movie Night event. Get your popcorn ready! 🍿")
+ELSE 
+    SET @msj = Concat(@msj, "just a friendly reminder about our upcoming event tomorrow. Check your calendar for details. See you there!")
+ENDIF
+
+]%%
+
+%%=v(@msj)=%%
+
+<!-- Vince solution -->
+%%[
+
+SET @firstName = [FirstName]
+SET @eventName = [Event Name]
+
+/* LOGIC FOR FIRST NAME CLEANING */
+IF EMPTY(@firstName) THEN
+  SET @finalName = "there"
+ELSE
+  SET @firstNameTrim = Trim(@firstName)
+  SET @finalName = Propercase(@firstNameTrim)
+ENDIF
+
+/* LOGIC FOR DYNAMIC MESSAGE */
+IF @eventName == "Tech Talk" THEN
+  SET @message = CONCAT("Hey ", @finalName, ", 📅 Don't forget! Tomorrow is our Ted Talk event at 2 PM. See you there! 🚀")
+
+ELSEIF @eventName == "Networking Mixer" THEN
+  SET @message = CONCAT("Hey ", @finalName, ", 🎉 Get ready! Our Networking Mixer is tomorrow evening at 6 PM. Bring your business cards! 🤝")
+
+ELSEIF @eventName == "Fitness Bootcamp" THEN
+  SET @message = CONCAT("Hey ", @finalName, ", 💪 Get pumped! Our Fitness Bootcamp starts tomorrow morning at 8 AM. Don't miss out on the workout of the week! 🏋️‍♂️")
+
+ELSEIF @eventName == "Movie Night" THEN
+  SET @message = CONCAT("Hey ", @finalName, ", 🎬 Movie buffs, unite! Tomorrow night at 7 PM is our Movie Night event. Get your popcorn ready! 🍿")
+
+ELSE
+  SET @message = CONCAT("Hey ", @finalName, ", just a friendly reminder about our upcoming event tomorrow. Check your calendar for details. See you there!")
+
+ENDIF
+
+
+]%%
+%%=v(@message)=%%
+<!--  -->
