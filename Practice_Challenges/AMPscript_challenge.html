@@ -151,3 +151,48 @@ ENDIF
 ]%%
 %%=v(@message)=%%
 <!--  -->
+
+<!--Week 3: Sample Brief Exercise 1 Creating a Tiered Promotional Offer Email -->
+%%[
+SET @firstName = Propercase(Trim([FirstName]))
+SET @loyaltyTier = [LoyaltyTier]  
+SET @lastQuarterSpend = [LastQuarterSpend]
+
+IF EMPTY(@firstName) THEN
+  SET @firstName = "friend"
+ENDIF 
+
+IF @lastQuarterSpend > 1000 THEN
+  IF @loyaltyTier == "Bronze" THEN
+    SET @message = "Enjoy a 10% discount on your next purchase"
+  ELSEIF @loyaltyTier == "Silver" THEN
+    SET @message = "Enjoy a 15% discount on your next purchase."
+  ELSE
+    SET @message = "Congratulations! You've earned a 20% discount on your next purchase."
+  ENDIF
+ELSEIF @lastQuarterSpend >= 500 THEN
+  IF @loyaltyTier == "Bronze" OR @loyaltyTier == "Silver" THEN
+    SET @message = "You're eligible for a 5% discount on your next purchase."
+  ELSE
+    SET @message = "Enjoy a 10% discount on your next purchase."
+  ENDIF
+ELSE
+  IF @loyaltyTier == "Bronze" THEN
+    SET @message = "Check out our new arrivals!"
+  ELSEIF @loyaltyTier == "Silver" THEN
+    SET @message = "You get a 2% discount on your next shopping trip."
+  ELSE
+    SET @message = "You're eligible for a 5% discount on your next purchase."
+  ENDIF
+ENDIF
+
+
+SET @finalMessage = CONCAT("Hello ", @firstName, "<br/><br/>", @message)
+]%%
+
+<div style="color:#000000;direction:ltr;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;font-size:15px;font-weight:400;letter-spacing:0px;line-height:150%;text-align:center;mso-line-height-alt:22.5px;">   
+   
+
+  <p style="margin: 0;">%%=v(@finalMessage)=%%</p>
+</div>
+<!--  -->
