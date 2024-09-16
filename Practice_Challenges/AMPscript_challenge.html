@@ -170,7 +170,7 @@ IF @lastQuarterSpend > 1000 THEN
   ELSE
     SET @message = "Congratulations! You've earned a 20% discount on your next purchase."
   ENDIF
-ELSEIF @lastQuarterSpend >= 500 THEN
+ELSEIF @lastQuarterSpend >= 500 THEN AND @lastQuarterSpend <= 1000
   IF @loyaltyTier == "Bronze" OR @loyaltyTier == "Silver" THEN
     SET @message = "You're eligible for a 5% discount on your next purchase."
   ELSE
@@ -195,4 +195,56 @@ SET @finalMessage = CONCAT("Hello ", @firstName, "<br/><br/>", @message)
 
   <p style="margin: 0;">%%=v(@finalMessage)=%%</p>
 </div>
+<!-- Vince solution -->
+%%[
+
+/* RETRIEVE FIELDS */
+SET @firstName = [FirstName]
+SET @tier = [LoyaltyTier]
+SET @lastQspend = [LastQuarterSpend]
+
+/* LOGIC FOR FIRST NAME */
+IF NOT EMPTY(@firstName) THEN
+  SET @firstNameTrim = Trim(@firstName)
+  SET @finalName = ProperCase(@firstNameTrim)
+ELSE
+  SET @finalName = "friend"
+ENDIF
+
+/* LOGIC FOR PERSONALISED MESSAGE */
+
+/* LAST QUARTER SPEND MORE THAN $1000 */
+IF @lastQspend > 1000 THEN
+  IF @tier == "Bronze" THEN
+    SET @message = "Enjoy a 10% discount on your next purchase."
+  ELSEIF @tier == "Silver" THEN
+    SET @message = "Enjoy a 15% discount on your next purchase."
+  ELSE
+    SET @message = "Congratulations! You've earned a 20% discount on your next purchase."
+  ENDIF
+  
+/* LAST QUARTER SPEND BETWEEN $500 AND $1000 */
+ELSEIF @lastQspend >= 500 AND @lastQspend <= 1000 THEN
+  IF @tier == "Bronze" THEN
+    SET @message = "Enjoy a 5% discount on your next purchase."
+  ELSEIF @tier == "Silver" THEN
+    SET @message = "You're eligible for a 5% discount on your next purchase."
+  ELSE
+    SET @message = "Enjoy a 10% discount on your next purchase."
+  ENDIF
+
+/* LAST QUARTER SPEND LESS THAN $500 */
+ELSE
+  IF @tier == "Bronze" THEN
+    SET @message = "Check out our new arrivals!"
+  ELSEIF @tier == "Silver" THEN
+    SET @message = "You get a 2% discount on your next shopping trip."
+  ELSE
+    SET @message = "You're eligible for a 5% discount on your next purchase."
+  ENDIF
+  
+ENDIF
+
+
+]%%
 <!--  -->
