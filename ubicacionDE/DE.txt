@@ -1,9 +1,0 @@
-
-VITAL
-en Email
-
-Salesforce Data Extensions > Leads_2
-
-Data Extensions > SFIMport_Contacts
-Data Extensions > SFIMport_Contacts_2
-

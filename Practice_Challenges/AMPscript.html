@@ -557,3 +557,49 @@ ELSEIF @NegativeBalance >= 100 AND @NegativeBalance <= 200 THEN SET
     %%=v(@FormattedArrivalTime)=%%, at least 2 hours before departure.
 
     Reply STOP to 0410456890 to opt out of messages.
+
+    <!--  -->
+
+    %%[
+    SET @firstname = ProperCase(Trim([firstname]))
+    SET @loyaltyTier = [LoyaltyTier]
+    SET @monthlySpend = [MonthlySpend]
+    IF Empty(@firstname) THEN
+    SET @firstname = "there"
+    ENDIF
+    IF @monthlySpend < 100 THEN IF @loyaltyTier=="Bronze" THEN SET @message="Hi @firstname! 🌟 Thanks
+ FOR spending with us! Here’s a 10% discount code
+FOR your
+    NEXT visit: BNZL12024. We hope TO see you again soon! " ELSEIF @loyaltyTier=="Silver" THEN SET @message="Hi @firstname! 🌟 Thanks
+    FOR spending with us! Here’s a 10% discount code
+    FOR your
+NEXT visit: SVRL12024. We hope TO see you again soon! " ELSEIF @loyaltyTier=="Gold" THEN SET @message="Hi @firstname! 🌟 Thanks
+    FOR spending with us! Here’s a 10% discount code
+    FOR your
+NEXT visit: GLDL12024. We hope TO see you again soon! " ELSE SET @message="Hi @firstname! 🌟 Thanks
+    FOR spending with us! Here’s a 10% discount code
+    FOR your
+NEXT visit: PNDL12024. We hope TO see you again soon! " ENDIF ELSEIF @monthlySpend>= 100 AND @monthlySpend
+        <= 500 THEN IF @loyaltyTier=="Bronze" THEN SET @message="Hi @firstname! 🌟 We appreciate your loyalty! Enjoy a 15% discount on your
+    NEXT visit with code: BNZL22024. Thank you
+    FOR spending with us! 😊" ELSEIF @loyaltyTier=="Silver" THEN SET @message="Hi @firstname! 🌟 We appreciate your loyalty! Enjoy a 15% discount on your
+NEXT visit with code: SVRL22024. Thank you
+FOR spending with us! 😊 " ELSEIF @loyaltyTier=="Gold" THEN SET @message="Hi @firstname! 🌟 We appreciate your loyalty! Enjoy a 15% discount on your
+NEXT visit with code: GLDL22024. Thank you
+FOR spending with us! 😊 " ELSE SET @message="Hi @firstname! 🌟 We appreciate your loyalty! Enjoy a 15% discount on your
+NEXT visit with code: PNDL22024. Thank you
+FOR spending with us! 😊 " ENDIF ELSE IF @loyaltyTier=="Bronze" THEN SET @message="Hi @firstname! 🌟 Thank you
+        FOR being a top spender this month! As a token of our appreciation, here’s a 20% discount code just
+        FOR you: BNZL32024. Use it on your
+    NEXT visit and earn big! 💸 " ELSEIF @loyaltyTier=="Silver" THEN SET @message="Hi @firstname! 🌟 Thank you
+    FOR being a top spender this month! As a token of our appreciation, here’s a 20% discount code just
+    FOR you: SVRL32024. Use it on your
+NEXT visit and earn big! 💸 " ELSEIF @loyaltyTier=="Gold" THEN SET @message="Hi @firstname! 🌟 Thank you
+    FOR being a top spender this month! As a token of our appreciation, here’s a 20% discount code just
+    FOR you: GLDL32024. Use it on your
+NEXT visit and earn big! 💸 " ELSE SET @message="Hi @firstname! 🌟 Thank you
+    FOR being a top spender this month! As a token of our appreciation, here’s a 20% discount code just
+    FOR you: PNDL32024. Use it on your
+NEXT visit and earn big! 💸 " ENDIF ENDIF SET @finalMessage=Concat("Hello ", @firstname, " <br /><br />", @message)
+        ]%%
+        %%=v(@finalMessage)=%%

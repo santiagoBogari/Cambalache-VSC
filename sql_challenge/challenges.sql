@@ -42,12 +42,12 @@ WHERE
     data_usage / data_plan BETWEEN 0.5 AND 0.75
 
 --day 08
-SELECT 
-    id,
-    data_plan
+
+SELECT id, data_plan
+
 FROM [NextMobile_Plans]
-WHERE
-    data_plan IN ('Flex', 'Flex Plus', 'Essential')
+
+WHERE data_plan IN ('Flex', 'Flex Plus', 'Essential')
 
 --day 09
 SELECT 
